@@ -19,6 +19,8 @@
 		66498309288B1E3A001C665D /* custombootchime.wav in Resources */ = {isa = PBXBuildFile; fileRef = 66498308288B1E3A001C665D /* custombootchime.wav */; };
 		6649830B288B21C3001C665D /* ToolbarDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6649830A288B21C3001C665D /* ToolbarDelegates.swift */; };
 		6649830D288B2E9D001C665D /* MainSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6649830C288B2E9D001C665D /* MainSplitViewController.swift */; };
+		6649830F288E221E001C665D /* ProductLinesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6649830E288E221E001C665D /* ProductLinesTableViewController.swift */; };
+		669B2621288E47EC00314847 /* CustomValueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669B2620288E47EC00314847 /* CustomValueViewController.swift */; };
 		66D13C6A288A46FD0078C5DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D13C69288A46FD0078C5DA /* AppDelegate.swift */; };
 		66D13C6C288A46FD0078C5DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D13C6B288A46FD0078C5DA /* SceneDelegate.swift */; };
 		66D13C6E288A46FD0078C5DA /* Standard Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D13C6D288A46FD0078C5DA /* Standard Views.swift */; };
@@ -62,6 +64,8 @@
 		66498308288B1E3A001C665D /* custombootchime.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = custombootchime.wav; sourceTree = "<group>"; };
 		6649830A288B21C3001C665D /* ToolbarDelegates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarDelegates.swift; sourceTree = "<group>"; };
 		6649830C288B2E9D001C665D /* MainSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitViewController.swift; sourceTree = "<group>"; };
+		6649830E288E221E001C665D /* ProductLinesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductLinesTableViewController.swift; sourceTree = "<group>"; };
+		669B2620288E47EC00314847 /* CustomValueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomValueViewController.swift; sourceTree = "<group>"; };
 		66D13C66288A46FD0078C5DA /* AppleTrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppleTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66D13C69288A46FD0078C5DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66D13C6B288A46FD0078C5DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +107,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		669B2622288E481400314847 /* New Device */ = {
+			isa = PBXGroup;
+			children = (
+				66498300288A8A9E001C665D /* NewDeviceTableViewController.swift */,
+				669B2620288E47EC00314847 /* CustomValueViewController.swift */,
+				6649830E288E221E001C665D /* ProductLinesTableViewController.swift */,
+			);
+			path = "New Device";
+			sourceTree = "<group>";
+		};
+		669B2623288E482300314847 /* Home View */ = {
+			isa = PBXGroup;
+			children = (
+				664982F8288A705F001C665D /* HomeTableViewController.swift */,
+				664982F6288A6BF2001C665D /* DetailsTableViewController.swift */,
+			);
+			path = "Home View";
+			sourceTree = "<group>";
+		};
+		669B2624288E482C00314847 /* Initial Views */ = {
+			isa = PBXGroup;
+			children = (
+				66498302288A927D001C665D /* BootViewController.swift */,
+				6649830C288B2E9D001C665D /* MainSplitViewController.swift */,
+			);
+			path = "Initial Views";
+			sourceTree = "<group>";
+		};
+		669B2625288E483400314847 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				664982FA288A7471001C665D /* AboutTableViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		66D13C5D288A46FD0078C5DA = {
 			isa = PBXGroup;
 			children = (
@@ -131,15 +171,13 @@
 				66D13C6B288A46FD0078C5DA /* SceneDelegate.swift */,
 				6649830A288B21C3001C665D /* ToolbarDelegates.swift */,
 				664982FC288A7F06001C665D /* SavedDevices Data Model.swift */,
-				66D13C6D288A46FD0078C5DA /* Standard Views.swift */,
 				664982FE288A81DD001C665D /* Product Lines.swift */,
+				66D13C6D288A46FD0078C5DA /* Standard Views.swift */,
 				66D13C6F288A46FD0078C5DA /* Main.storyboard */,
-				66498302288A927D001C665D /* BootViewController.swift */,
-				664982F8288A705F001C665D /* HomeTableViewController.swift */,
-				664982F6288A6BF2001C665D /* DetailsTableViewController.swift */,
-				66498300288A8A9E001C665D /* NewDeviceTableViewController.swift */,
-				6649830C288B2E9D001C665D /* MainSplitViewController.swift */,
-				664982FA288A7471001C665D /* AboutTableViewController.swift */,
+				669B2624288E482C00314847 /* Initial Views */,
+				669B2623288E482300314847 /* Home View */,
+				669B2622288E481400314847 /* New Device */,
+				669B2625288E483400314847 /* Settings */,
 				66D13C75288A46FF0078C5DA /* Assets.xcassets */,
 				66D13C77288A46FF0078C5DA /* LaunchScreen.storyboard */,
 				66D13C7A288A46FF0078C5DA /* Info.plist */,
@@ -307,11 +345,13 @@
 				664982F9288A705F001C665D /* HomeTableViewController.swift in Sources */,
 				664982FD288A7F06001C665D /* SavedDevices Data Model.swift in Sources */,
 				66D13C6E288A46FD0078C5DA /* Standard Views.swift in Sources */,
+				6649830F288E221E001C665D /* ProductLinesTableViewController.swift in Sources */,
 				664982F7288A6BF2001C665D /* DetailsTableViewController.swift in Sources */,
 				66D13C6A288A46FD0078C5DA /* AppDelegate.swift in Sources */,
 				6649830B288B21C3001C665D /* ToolbarDelegates.swift in Sources */,
 				664982FB288A7471001C665D /* AboutTableViewController.swift in Sources */,
 				66D13C74288A46FD0078C5DA /* AppleTrack.xcdatamodeld in Sources */,
+				669B2621288E47EC00314847 /* CustomValueViewController.swift in Sources */,
 				66D13C6C288A46FD0078C5DA /* SceneDelegate.swift in Sources */,
 				66498301288A8A9E001C665D /* NewDeviceTableViewController.swift in Sources */,
 				664982FF288A81DD001C665D /* Product Lines.swift in Sources */,

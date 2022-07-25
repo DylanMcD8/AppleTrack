@@ -9,17 +9,17 @@ import Foundation
 
 let mainProductLines = [
 	"iPhone",
-	"iPad",
-	"iPod",
+	"iPadMORE",
+	"iPodMORE",
 	"Apple Watch",
-	"Mac",
+	"MacMORE",
 	"Apple TV",
 	"AirPods",
 	"HomePod",
 	"Accessories",
 	"Newton",
 	"AirPort",
-	"Custom..."
+	"Custom...CUSTOM"
 ]
 
 let iPadProductLines = [

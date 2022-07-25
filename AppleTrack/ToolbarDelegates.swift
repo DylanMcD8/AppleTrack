@@ -136,7 +136,7 @@ extension HomeToolbarDelegate: NSToolbarDelegate {
             .sortOptions,
 			.refresh,
             .openSettings
-        ]
+		].reversed()
         return identifiers
     }
     func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
@@ -165,9 +165,9 @@ extension HomeToolbarDelegate: NSToolbarDelegate {
 			toolbarItem = item
 			
 		case .openSettings:
-			item.image = UIImage(systemName: "gear")
-			item.toolTip = "Opens the app's settings."
-			item.title = "Settings"
+			item.image = UIImage(systemName: "info.circle")
+			item.toolTip = "Opens the app's information page."
+			item.title = "App Info"
 			item.action = NSSelectorFromString("openSettings:")
 			toolbarItem = item
 			

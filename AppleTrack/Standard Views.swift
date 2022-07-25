@@ -193,3 +193,73 @@ func macAccentColorName() -> String {
 	return toReturn
 }
 
+
+let cornerRadius: CGFloat = runningOn == "Mac" ? 10 : 10
+
+class BlurredStandardcell: UITableViewCell {
+	override func awakeFromNib() {
+		if runningOn == "Mac" {
+			super.awakeFromNib()
+			self.backgroundColor = .clear
+			let customBackgroundView = UIView()
+			customBackgroundView.backgroundColor = .secondarySystemGroupedBackground
+			customBackgroundView.layer.cornerCurve = .continuous
+			customBackgroundView.layer.cornerRadius = cornerRadius
+			customBackgroundView.clipsToBounds = true
+			if runningOn == "Mac" {
+				if self.backgroundColor == .none || self.backgroundColor == .clear || self.backgroundColor == .secondarySystemGroupedBackground {
+					customBackgroundView.backgroundColor = .separator.withAlphaComponent(0.05)
+				} else {
+					customBackgroundView.backgroundColor = self.backgroundColor
+				}
+				customBackgroundView.layer.borderColor = UIColor.separator.cgColor
+				customBackgroundView.layer.borderWidth = 1
+			} else {
+				customBackgroundView.backgroundColor = UIColor(named: "Cell on Blur")!
+			}
+			self.backgroundView = customBackgroundView
+			
+			let selectedBackView = UIView()
+			selectedBackView.layer.cornerCurve = .continuous
+			selectedBackView.layer.cornerRadius = cornerRadius
+			selectedBackView.frame = self.frame
+			if runningOn == "Mac" {
+				selectedBackView.backgroundColor = .separator.withAlphaComponent(0.1)
+				selectedBackView.layer.borderColor = UIColor.separator.cgColor
+				selectedBackView.layer.borderWidth = 1
+			} else {
+				selectedBackView.backgroundColor = UIColor(named: "Cell on Blur Secondary")!
+			}
+			selectedBackView.clipsToBounds = true
+			self.selectedBackgroundView = selectedBackView
+		}
+	}
+}
+
+final class SheetTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
+	
+	
+	var shouldShowGrabber: Bool = false
+	
+	func presentationController(
+		forPresented presented: UIViewController,
+		presenting: UIViewController?,
+		source: UIViewController
+	) -> UIPresentationController? {
+		let controller = UISheetPresentationController(presentedViewController: presented, presenting: presenting)
+		//        controller.preferredCornerRadius = 30
+		controller.prefersScrollingExpandsWhenScrolledToEdge = true
+		if source.viewIsCompact {
+			controller.detents = [.medium(), .large()]
+			//            controller.largestUndimmedDetentIdentifier = .medium
+		} else {
+			controller.detents = [.large()]
+		}
+		if runningOn == "Mac" {
+			controller.prefersGrabberVisible = false
+		} else {
+			controller.prefersGrabberVisible = shouldShowGrabber
+		}
+		return controller
+	}
+}
