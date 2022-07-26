@@ -16,6 +16,10 @@ class MainViewController: UISplitViewController {
 			self.view.backgroundColor = .clear
 		}
 		
+		self.maximumPrimaryColumnWidth = .infinity
+		self.minimumPrimaryColumnWidth = 350
+		self.preferredPrimaryColumnWidthFraction = 0.3
+		
 		NotificationCenter.default.addObserver(self, selector: #selector(showBoot(_:)), name: NSNotification.Name(rawValue: "ShowBoot"), object: nil)
 		
 		if needsBoot {

@@ -96,7 +96,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bba-5Y-Jyb">
                                             <rect key="frame" x="98.333333333333329" y="24.666666666666668" width="213.33333333333337" height="41.333333333333329"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="iPhone 6" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eBw-ts-uuD">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iPhone 6" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eBw-ts-uuD">
                                                     <rect key="frame" x="0.0" y="0.0" width="213.33333333333334" height="20.333333333333332"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -105,7 +105,7 @@
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                     </variation>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Silver • 2014" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oqv-Mu-fhW">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Silver • 2014" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oqv-Mu-fhW">
                                                     <rect key="frame" x="0.0" y="24.333333333333329" width="213.33333333333334" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -156,7 +156,7 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="DbJ-fc-SAs"/>
                         <leftBarButtonItems>
                             <barButtonItem title="Open Info" id="qud-26-bqe">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" id="SJD-YP-akT">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" id="SJD-YP-akT">
                                     <rect key="frame" x="16" y="3.6666666666666679" width="36.666666666666664" height="36.666666666666657"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
@@ -265,7 +265,7 @@
         <!--Main View Controller-->
         <scene sceneID="NqN-Tw-qDj">
             <objects>
-                <splitViewController allowDoubleColumnStyle="YES" primaryBackgroundStyle="sidebar" id="guL-Jj-d1M" customClass="MainViewController" customModule="AppleTrack" customModuleProvider="target" sceneMemberID="viewController">
+                <splitViewController allowDoubleColumnStyle="YES" preferredDisplayMode="beside" behavior="tile" presentsWithGesture="NO" primaryBackgroundStyle="sidebar" id="guL-Jj-d1M" customClass="MainViewController" customModule="AppleTrack" customModuleProvider="target" sceneMemberID="viewController">
                     <connections>
                         <segue destination="YWg-up-IOb" kind="relationship" relationship="masterViewController" id="zDG-zc-cfe"/>
                         <segue destination="YWg-up-IOb" kind="relationship" relationship="compactViewController" id="fMR-JH-X4D"/>
@@ -320,7 +320,7 @@
                                     <rect key="frame" x="0.0" y="100" width="390" height="130"/>
                                     <color key="tintColor" name="LabelInvert"/>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iPhone 13 Pro Max" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9B0-nY-Ww4">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iPhone 13 Pro Max" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9B0-nY-Ww4">
                                     <rect key="frame" x="16" y="178" width="358" height="36"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                     <nil key="highlightedColor"/>
@@ -1272,13 +1272,13 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EFs-6p-1Qx">
                                                     <rect key="frame" x="98.333333333333329" y="24.666666666666668" width="213.33333333333337" height="41.333333333333329"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="iPhone 6🅂" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vdc-mh-JiZ">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iPhone 6🅂" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vdc-mh-JiZ">
                                                             <rect key="frame" x="0.0" y="0.0" width="213.33333333333334" height="20.333333333333332"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Space Gray • 2015" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yI2-s2-vO8">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Space Gray • 2015" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yI2-s2-vO8">
                                                             <rect key="frame" x="0.0" y="24.333333333333329" width="213.33333333333334" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                             <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -1508,13 +1508,13 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mTt-dI-Fe6">
                                                     <rect key="frame" x="98.333333333333329" y="14.333333333333332" width="213.33333333333337" height="61.666666666666671"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iPad Pro 12.9-inch (5th Generation)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZhJ-cl-6fZ">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="iPad Pro 12.9-inch (5th Generation)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZhJ-cl-6fZ">
                                                             <rect key="frame" x="0.0" y="0.0" width="213.33333333333334" height="40.666666666666664"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Space Gray • 2021" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d6u-Ti-L7T">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Space Gray • 2021" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d6u-Ti-L7T">
                                                             <rect key="frame" x="0.0" y="44.666666666666664" width="213.33333333333334" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                             <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -1914,7 +1914,7 @@
                                 </button>
                             </barButtonItem>
                             <barButtonItem title="Refresh Data" id="vMe-7e-Cb7">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" id="rRS-Kw-yJS">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" id="rRS-Kw-yJS">
                                     <rect key="frame" x="248" y="3.6666666666666679" width="36.666666666666686" height="36.666666666666657"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
@@ -2405,7 +2405,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="350" height="36"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" toolTip="Select a Product Line from the list." buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="eme-UT-BB4">
+                                                <button toolTip="Select a Product Line from the list." opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="eme-UT-BB4">
                                                     <rect key="frame" x="0.0" y="5" width="350" height="31"/>
                                                     <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
@@ -3042,7 +3042,7 @@
                                         <rect key="frame" x="20" y="904" width="350" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MsN-BD-ZkE" id="dp9-Zy-2vf">
-                                            <rect key="frame" x="0.0" y="0.0" width="319.66666666666669" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="331.66666666666669" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FIS-jN-0hS">
@@ -3116,7 +3116,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="171" height="34.666666666666664"/>
                                                     <color key="tintColor" systemColor="systemRedColor"/>
                                                     <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="tinted" image="xmark" catalog="system" title="Cancel" imagePadding="5" cornerStyle="medium" macIdiomStyle="automatic">
+                                                    <buttonConfiguration key="configuration" style="tinted" image="xmark" catalog="system" title="Cancel" imagePadding="5" cornerStyle="large" macIdiomStyle="automatic">
                                                         <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="medium" weight="medium"/>
                                                     </buttonConfiguration>
                                                     <variation key="userInterfaceIdiom=mac" hidden="YES"/>
@@ -3348,25 +3348,48 @@
             </objects>
             <point key="canvasLocation" x="4768" y="-643"/>
         </scene>
-        <!--View Controller-->
+        <!--Date Picker View Controller-->
         <scene sceneID="xxe-Jp-Tvw">
             <objects>
-                <viewController id="gle-YR-csR" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Date Picker" id="gle-YR-csR" customClass="DatePickerViewController" customModule="AppleTrack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XIk-ho-vrt">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T8Q-Pn-xRw">
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Ic1-bM-j9z">
+                                    <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="prominent"/>
+                                <variation key="userInterfaceIdiom=mac" hidden="YES"/>
+                            </visualEffectView>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="I3a-b8-3Q3">
-                                <rect key="frame" x="20" y="108" width="350" height="328"/>
+                                <rect key="frame" x="10" y="97.999999999999972" width="370" height="342.33333333333326"/>
                             </datePicker>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" role="primary" translatesAutoresizingMaskIntoConstraints="NO" id="8q2-Ay-l97" customClass="TintedButton" customModule="AppleTrack" customModuleProvider="target">
+                                <rect key="frame" x="307.66666666666669" y="460.33333333333331" width="62.333333333333314" height="34.333333333333314"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Save" cornerStyle="large" macIdiomStyle="bordered"/>
+                                <connections>
+                                    <action selector="dismiss:" destination="gle-YR-csR" eventType="touchUpInside" id="WFy-u7-lJT"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8jK-Pt-j7r"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="I3a-b8-3Q3" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="8jK-Pt-j7r" secondAttribute="bottom" constant="-20" id="4Je-NM-IZV"/>
-                            <constraint firstItem="I3a-b8-3Q3" firstAttribute="leading" secondItem="8jK-Pt-j7r" secondAttribute="leading" constant="20" id="544-du-S9n"/>
-                            <constraint firstItem="I3a-b8-3Q3" firstAttribute="top" secondItem="8jK-Pt-j7r" secondAttribute="top" constant="20" id="EDC-3s-4GR"/>
-                            <constraint firstItem="I3a-b8-3Q3" firstAttribute="trailing" secondItem="8jK-Pt-j7r" secondAttribute="trailing" constant="-20" id="hNW-6E-ECM"/>
+                            <constraint firstItem="I3a-b8-3Q3" firstAttribute="leading" secondItem="8jK-Pt-j7r" secondAttribute="leading" constant="10" id="544-du-S9n"/>
+                            <constraint firstAttribute="trailing" secondItem="T8Q-Pn-xRw" secondAttribute="trailing" id="8xg-Wn-uuM"/>
+                            <constraint firstAttribute="bottom" secondItem="T8Q-Pn-xRw" secondAttribute="bottom" id="A2Z-y8-4v0"/>
+                            <constraint firstItem="I3a-b8-3Q3" firstAttribute="top" secondItem="8jK-Pt-j7r" secondAttribute="top" constant="10" id="EDC-3s-4GR"/>
+                            <constraint firstItem="T8Q-Pn-xRw" firstAttribute="leading" secondItem="XIk-ho-vrt" secondAttribute="leading" id="M6K-qw-jJe"/>
+                            <constraint firstItem="8jK-Pt-j7r" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8q2-Ay-l97" secondAttribute="bottom" constant="20" id="N3u-uu-h6r"/>
+                            <constraint firstItem="8q2-Ay-l97" firstAttribute="top" secondItem="I3a-b8-3Q3" secondAttribute="bottom" constant="20" id="NBX-QC-P28"/>
+                            <constraint firstItem="8jK-Pt-j7r" firstAttribute="trailing" secondItem="8q2-Ay-l97" secondAttribute="trailing" constant="20" id="UQR-ef-AZC"/>
+                            <constraint firstItem="I3a-b8-3Q3" firstAttribute="trailing" secondItem="8jK-Pt-j7r" secondAttribute="trailing" constant="-10" id="hNW-6E-ECM"/>
+                            <constraint firstItem="T8Q-Pn-xRw" firstAttribute="top" secondItem="XIk-ho-vrt" secondAttribute="top" id="uDe-4H-drP"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="UUa-cw-Xq7">
@@ -3386,15 +3409,19 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="medium" weight="bold"/>
                                 </buttonConfiguration>
                                 <connections>
+                                    <action selector="dismiss:" destination="gle-YR-csR" eventType="touchUpInside" id="3j8-B9-CT5"/>
                                     <action selector="dismiss:" destination="cMK-EV-8v4" eventType="touchUpInside" id="fNd-4j-8ta"/>
                                 </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="datePicker" destination="I3a-b8-3Q3" id="YLA-jI-nIZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v7D-yu-3Pe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3300" y="-643"/>
+            <point key="canvasLocation" x="3300" y="-643.3649289099526"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eQc-Mm-iOL">
@@ -3464,9 +3491,7 @@
                                 <rect key="frame" x="263.33333333333331" y="245.66666666666663" width="76.666666666666686" height="34.333333333333371"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Edit Ratio"/>
-                                <buttonConfiguration key="configuration" style="tinted" title="Save" macIdiomStyle="bordered">
-                                    <backgroundConfiguration key="background" cornerRadius="10"/>
-                                </buttonConfiguration>
+                                <buttonConfiguration key="configuration" style="tinted" title="Save" cornerStyle="large" macIdiomStyle="bordered"/>
                                 <connections>
                                     <action selector="save:" destination="opj-Xq-3gP" eventType="touchUpInside" id="blh-uP-9Oo"/>
                                 </connections>
@@ -3475,9 +3500,7 @@
                                 <rect key="frame" x="176.66666666666666" y="245.66666666666666" width="76.666666666666657" height="34.333333333333343"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Save as Preset"/>
-                                <buttonConfiguration key="configuration" style="gray" title="Cancel" macIdiomStyle="bordered">
-                                    <backgroundConfiguration key="background" cornerRadius="10"/>
-                                </buttonConfiguration>
+                                <buttonConfiguration key="configuration" style="gray" title="Cancel" cornerStyle="large" macIdiomStyle="bordered"/>
                                 <connections>
                                     <action selector="cancel:" destination="opj-Xq-3gP" eventType="touchUpInside" id="Uxa-xq-Dim"/>
                                 </connections>
@@ -3549,9 +3572,7 @@
                                 <rect key="frame" x="185" y="245.66666666666663" width="155" height="34.333333333333371"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Edit Ratio"/>
-                                <buttonConfiguration key="configuration" style="tinted" title="Save" macIdiomStyle="bordered">
-                                    <backgroundConfiguration key="background" cornerRadius="10"/>
-                                </buttonConfiguration>
+                                <buttonConfiguration key="configuration" style="tinted" title="Save" cornerStyle="large" macIdiomStyle="bordered"/>
                                 <connections>
                                     <action selector="save:" destination="gmH-4e-BEa" eventType="touchUpInside" id="Ceb-kc-CZT"/>
                                 </connections>
@@ -3560,9 +3581,7 @@
                                 <rect key="frame" x="20" y="245.66666666666666" width="155" height="34.333333333333343"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Save as Preset"/>
-                                <buttonConfiguration key="configuration" style="gray" title="Cancel" macIdiomStyle="bordered">
-                                    <backgroundConfiguration key="background" cornerRadius="10"/>
-                                </buttonConfiguration>
+                                <buttonConfiguration key="configuration" style="gray" title="Cancel" cornerStyle="large" macIdiomStyle="bordered"/>
                                 <connections>
                                     <action selector="cancel:" destination="gmH-4e-BEa" eventType="touchUpInside" id="Azv-JV-DRa"/>
                                 </connections>

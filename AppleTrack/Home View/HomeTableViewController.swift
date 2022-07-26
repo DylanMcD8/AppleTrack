@@ -191,7 +191,12 @@ class HomeTableViewController: UITableViewController {
 //			self.shareAction(indexPath: indexPath)
 //		}
 		
-		return UIMenu(title: "Options", children: [edit, delete])
+		let menu = UIMenu(title: "", children: [edit, delete])
+		if #available(iOS 16.0, *) {
+			menu.preferredElementSize = .medium
+		}
+		
+		return menu
 	}
 	
 	func deleteAction(indexPath: IndexPath) {

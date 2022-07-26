@@ -65,6 +65,8 @@ class NewDeviceTableViewController: UITableViewController, UITextFieldDelegate {
 			shipDate = deviceReleaseDate(forIndex: indexToEdit)
 			purchaseDateLabel.text = dateFormatter.string(from: devicePurchaseDate(forIndex: indexToEdit))
 			purchaseDate = devicePurchaseDate(forIndex: indexToEdit)
+			imageToSave = deviceImage(forIndex: indexToEdit)
+			productLine = deviceProductLine(forIndex: indexToEdit)
 		}
 		
 		if runningOn == "Mac" {
@@ -135,8 +137,79 @@ class NewDeviceTableViewController: UITableViewController, UITextFieldDelegate {
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateStyle = .medium
+		
+		if indexPath.section == 2 {
+			let viewID = runningOn == "Mac" ? "Date Picker" : "Date Picker"
+			let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: viewID) as! DatePickerViewController
+			
+			var dateCategoryToUse: String = ""
+			switch indexPath.row {
+			case 1:
+				dateCategoryToUse = "Announcement"
+				if dateFormatter.string(from: announcementDate) == dateFormatter.string(from: Date()) {
+					view.dateToSet = shipDate 
+				} else {
+					view.dateToSet = announcementDate
+				}
+			case 3:
+				dateCategoryToUse = "Ship"
+				if dateFormatter.string(from: shipDate) == dateFormatter.string(from: Date()) {
+					view.dateToSet = announcementDate 
+				} else {
+					view.dateToSet = shipDate
+				}
+			case 5:
+				dateCategoryToUse = "Purchase"
+				view.dateToSet = purchaseDate
+			default:
+				break
+			}
+			
+			view.sourceView = self
+			view.dateCategory = dateCategoryToUse
+			let navView = UINavigationController(rootViewController: view)
+			let appearance = UINavigationBarAppearance()
+			appearance.configureWithDefaultBackground()
+			navView.navigationBar.scrollEdgeAppearance = appearance
+			
+			if self.viewIsCompact {
+				navView.transitioningDelegate = self.sheetTransitioningDelegate
+				sheetTransitioningDelegate.shouldShowGrabber = false
+				navView.modalPresentationStyle = .custom
+			} else {
+				navView.modalPresentationStyle = .popover
+				let popover: UIPopoverPresentationController = navView.popoverPresentationController!
+				popover.sourceView = tableView.cellForRow(at: indexPath)
+			}
+			
+			self.present(navView, animated: true, completion: nil)
+		}
+		
 		if indexPath.section == 7 {
-			self.imagePicker.present(from: tableView.cellForRow(at: indexPath)!.contentView)
+			self.imagePicker.present(from: self.setImageCell.contentView)
+		}
+		
+		tableView.deselectRow(at: indexPath, animated: true)
+	}
+	
+	func setDate(with: Date, forCategory: String) {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateStyle = .medium
+		
+		switch forCategory {
+		case "Announcement":
+			self.announcementDate = with
+			self.announcementDateLabel.text = dateFormatter.string(from: with)
+		case "Ship":
+			self.shipDate = with
+			self.shipDateLabel.text = dateFormatter.string(from: with)
+		case "Purchase":
+			self.purchaseDate = with
+			self.purchaseDateLabel.text = dateFormatter.string(from: with)
+		default:
+			break
 		}
 	}
    
@@ -147,7 +220,7 @@ extension NewDeviceTableViewController: ImagePickerDelegate {
 	func didSelect(image: UIImage?) {
 		if image != nil {
 			self.setImageCell.accessoryType = .checkmark
-			self.imageToSave = image ?? UIImage(named: "Fallback Image")!
+			self.imageToSave = image?.fixedOrientation ?? UIImage(named: "Fallback Image")!
 		}
 	}
 }
@@ -231,7 +304,9 @@ open class ImagePicker: NSObject {
 		let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		
 		if let action = self.action(for: .camera, title: "Take Photo") {
-			alertController.addAction(action)
+			if runningOn != "Mac" {
+				alertController.addAction(action)
+			}
 		}
 		//        if let action = self.action(for: .savedPhotosAlbum, title: "Camera Roll") {
 		//            alertController.addAction(action)
@@ -243,11 +318,12 @@ open class ImagePicker: NSObject {
 		
 		alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 		
-		if UIDevice.current.userInterfaceIdiom == .pad {
+		if runningOn != "iPhone" {
 			alertController.popoverPresentationController?.sourceView = sourceView
 			alertController.popoverPresentationController?.sourceRect = sourceView.bounds
 			alertController.popoverPresentationController?.permittedArrowDirections = [.down, .up]
 		}
+		
 		
 		self.presentationController?.present(alertController, animated: true)
 	}
@@ -265,8 +341,7 @@ extension ImagePicker: UIImagePickerControllerDelegate {
 		self.pickerController(picker, didSelect: nil)
 	}
 	
-	public func imagePickerController(_ picker: UIImagePickerController,
-									  didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+	public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 		guard let image = info[.originalImage] as? UIImage else {
 			return self.pickerController(picker, didSelect: nil)
 		}
@@ -278,11 +353,48 @@ extension ImagePicker: UINavigationControllerDelegate {
 	
 }
 
-
 extension UIImage {
-	func resized(to size: CGSize) -> UIImage {
-		return UIGraphicsImageRenderer(size: size).image { _ in
-			draw(in: CGRect(origin: .zero, size: size))
+	var fixedOrientation: UIImage {
+		guard imageOrientation != .up else { return self }
+		
+		var transform: CGAffineTransform = .identity
+		switch imageOrientation {
+		case .down, .downMirrored:
+			transform = transform
+				.translatedBy(x: size.width, y: size.height).rotated(by: .pi)
+		case .left, .leftMirrored:
+			transform = transform
+				.translatedBy(x: size.width, y: 0).rotated(by: .pi)
+		case .right, .rightMirrored:
+			transform = transform
+				.translatedBy(x: 0, y: size.height).rotated(by: -.pi/2)
+		case .upMirrored:
+			transform = transform
+				.translatedBy(x: size.width, y: 0).scaledBy(x: -1, y: 1)
+		default:
+			break
 		}
+		
+		guard
+			let cgImage = cgImage,
+			let colorSpace = cgImage.colorSpace,
+			let context = CGContext(
+				data: nil, width: Int(size.width), height: Int(size.height),
+				bitsPerComponent: cgImage.bitsPerComponent, bytesPerRow: 0,
+				space: colorSpace, bitmapInfo: cgImage.bitmapInfo.rawValue
+			)
+		else { return self }
+		context.concatenate(transform)
+		
+		var rect: CGRect
+		switch imageOrientation {
+		case .left, .leftMirrored, .right, .rightMirrored:
+			rect = CGRect(x: 0, y: 0, width: size.height, height: size.width)
+		default:
+			rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+		}
+		
+		context.draw(cgImage, in: rect)
+		return context.makeImage().map { UIImage(cgImage: $0) } ?? self
 	}
 }

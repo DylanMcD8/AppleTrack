@@ -22,6 +22,12 @@ class ProductLinesTableViewController: UITableViewController {
 		self.navigationItem.leftBarButtonItems = [UIBarButtonItem.init(customView: label)]
 		
 		self.view.backgroundColor = .clear
+		
+		if runningOn != "Mac" {
+			let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
+			blurView.frame = self.view.bounds
+			tableView.backgroundView = blurView
+		}
     }
 	
 	override func numberOfSections(in tableView: UITableView) -> Int {
@@ -37,6 +43,26 @@ class ProductLinesTableViewController: UITableViewController {
 		
 		if mainProductLines[indexPath.section].contains("MORE") {
 			cell.accessoryType = .disclosureIndicator
+			DispatchQueue.main.async { [self] in
+				let menuButton = UIButton()
+				menuButton.preferredBehavioralStyle = .pad
+				menuButton.alpha = 1
+				menuButton.setTitle("", for: .normal)
+				menuButton.menu = getMenu(forProduct: mainProductLines[indexPath.section])
+				menuButton.showsMenuAsPrimaryAction = true
+				
+				cell.contentView.addSubview(menuButton)
+				
+				menuButton.translatesAutoresizingMaskIntoConstraints = false
+				let constraints = [
+					menuButton.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 0),
+					menuButton.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor, constant: 0),
+					menuButton.trailingAnchor.constraint(greaterThanOrEqualTo: cell.contentView.trailingAnchor, constant: 0),
+					menuButton.leadingAnchor.constraint(greaterThanOrEqualTo: cell.contentView.leadingAnchor, constant: 0),
+					menuButton.centerXAnchor.constraint(equalTo: cell.contentView.centerXAnchor)
+				]
+				NSLayoutConstraint.activate(constraints)
+			}
 		} else if mainProductLines[indexPath.section].contains("CUSTOM") {
 			cell.accessoryType = .disclosureIndicator
 		} 
@@ -73,6 +99,39 @@ class ProductLinesTableViewController: UITableViewController {
 	
 	@IBAction func dismiss(_ sender: Any) {
 		self.dismiss(animated: true)
+	}
+	
+	func generateMenuActions(forItems: [String]) -> [UIAction] {
+		var toReturn: [UIAction] = []
+		for product in forItems {
+			toReturn.append(
+				UIAction(title: product, image: nil, handler: { (_) in
+					self.sourceView.productLine = product
+					self.sourceView.productLineButton.setTitle(product, for: .normal)
+					self.dismiss(animated: true)
+				})
+			)
+		}
+		return toReturn
+	}
+	
+	func getMenu(forProduct: String) -> UIMenu {
+		let productName = forProduct.replacingOccurrences(of: "MORE", with: "")
+		switch forProduct {
+		case "MacMORE":
+			let laptopsMenu = UIMenu(title: "Laptops", subtitle: "Laptops", options: .displayInline, children: generateMenuActions(forItems: macLaptopProductLines)) 
+			let desktopsMenu = UIMenu(title: "Desktops", subtitle: "Desktops", options: .displayInline, children: generateMenuActions(forItems: macDesktopProductLines)) 
+			return UIMenu(title: "Options for " + productName, children: [laptopsMenu, desktopsMenu])
+			
+		case "iPodMORE":
+			return UIMenu(title: "Options for " + productName, children: generateMenuActions(forItems: iPodProductLines))
+			
+		case "iPadMORE":
+			return UIMenu(title: "Options for " + productName, children: generateMenuActions(forItems: iPadProductLines))
+			
+		default:
+			return UIMenu(title: "Error", children: generateMenuActions(forItems: ["Dismiss"]))
+		}
 	}
 	
 }
