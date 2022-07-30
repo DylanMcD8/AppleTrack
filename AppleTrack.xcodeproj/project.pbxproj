@@ -225,6 +225,8 @@
 			dependencies = (
 			);
 			name = AppleTrack;
+			packageProductDependencies = (
+			);
 			productName = AppleTrack;
 			productReference = 66D13C66288A46FD0078C5DA /* AppleTrack.app */;
 			productType = "com.apple.product-type.application";
@@ -297,6 +299,8 @@
 				Base,
 			);
 			mainGroup = 66D13C5D288A46FD0078C5DA;
+			packageReferences = (
+			);
 			productRefGroup = 66D13C67288A46FD0078C5DA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

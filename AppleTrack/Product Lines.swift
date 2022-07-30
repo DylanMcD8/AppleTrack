@@ -85,3 +85,12 @@ let colorsForiPhone = [
 	"Rose Gold",
 	"Slate"
 ]
+
+let rainbowAppleColors = [
+	"Apple Green",
+	"Apple Yellow",
+	"Apple Orange",
+	"Apple Red",
+	"Apple Purple",
+	"Apple Blue"
+]

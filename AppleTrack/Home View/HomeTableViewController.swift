@@ -12,14 +12,14 @@ class HomeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		getSavedDevicesData()
-		
-		self.navigationController?.isNavigationBarHidden = false
-		self.navigationController?.navigationBar.prefersLargeTitles = true
-		self.navigationController?.navigationBar.sizeToFit()
-		
 		if runningOn == "Mac" {
 			self.navigationController?.isNavigationBarHidden = true
 			self.view.backgroundColor = .clear
+		} else {
+			self.navigationController?.view.tintColor = self.view.tintColor
+			self.navigationController?.isNavigationBarHidden = false
+			self.navigationController?.navigationBar.prefersLargeTitles = true
+			self.navigationController?.navigationBar.sizeToFit()
 		}
 		
 		tableView.allowsFocus = false
@@ -32,9 +32,15 @@ class HomeTableViewController: UITableViewController {
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
-		self.navigationController?.isNavigationBarHidden = false
-		self.navigationController?.navigationBar.prefersLargeTitles = true
-		self.navigationController?.navigationBar.sizeToFit()
+		if runningOn == "Mac" {
+			self.navigationController?.isNavigationBarHidden = true
+			self.view.backgroundColor = .clear
+		} else {
+			self.navigationController?.view.tintColor = self.view.tintColor
+			self.navigationController?.isNavigationBarHidden = false
+			self.navigationController?.navigationBar.prefersLargeTitles = true
+			self.navigationController?.navigationBar.sizeToFit()
+		}
 		
 		DispatchQueue.main.async {
 			#if targetEnvironment(macCatalyst)
@@ -92,9 +98,26 @@ class HomeTableViewController: UITableViewController {
 		
 		let cell = self.tableView.dequeueReusableCell(withIdentifier: "main cell", for: indexPath) as! DeviceListCell
 		cell.titleLabel.text = deviceModelName(forIndex: index)
+		cell.titleLabel.textColor = .white
 		cell.subtitleLabel.text = deviceColor(forIndex: index) + " • " + releaseYear
+		cell.subtitleLabel.textColor = .white.withAlphaComponent(0.6)
 		cell.deviceImage.image = deviceImage(forIndex: index)
-			
+		
+		cell.index = index
+		
+		if runningOn == "Mac" {
+			cell.customBackgroundView.backgroundColor = appleColor(forIndex: index).withAlphaComponent(0.3)
+		} else {
+			cell.customBackgroundView.backgroundColor = UIColor(named: "LabelInvert")!.add(overlay: appleColor(forIndex: indexPath.section).withAlphaComponent(0.7))
+		}
+		
+		cell.deviceImage.layer.shouldRasterize = true
+		if let window = self.view.window {
+			cell.deviceImage.layer.rasterizationScale = window.screen.scale
+		} else {
+			cell.deviceImage.layer.rasterizationScale = 3
+		}
+		
 //		}
 		//		}
 	
@@ -245,30 +268,40 @@ class DeviceListCell: UITableViewCell {
 	@IBOutlet weak var subtitleLabel: UILabel!
 	@IBOutlet weak var deviceImage: UIImageView!
 	
+	var index: Int = 0
+	
+	var customBackgroundView = UIView()
+	var selectedBackView = UIView()
+	
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
 		if runningOn == "Mac" {
 			deviceImage.layer.cornerCurve = .continuous
-			deviceImage.layer.cornerRadius = 5
+			deviceImage.layer.cornerRadius = 10
 			deviceImage.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
 			deviceImage.layer.borderColor = UIColor.separator.cgColor
 			deviceImage.layer.borderWidth = 1
+		} else {
+			deviceImage.layer.cornerCurve = .continuous
+			deviceImage.layer.cornerRadius = 20
+			deviceImage.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
 		}
 		
-		let customBackgroundView = UIView()
 		if runningOn != "Mac" {
-			if self.backgroundColor == .none || self.backgroundColor == .clear {
-				customBackgroundView.backgroundColor = .secondarySystemGroupedBackground
+			if self.backgroundColor == .none || self.backgroundColor == .clear || self.backgroundColor == .secondarySystemGroupedBackground {
+//				customBackgroundView.backgroundColor = .secondarySystemGroupedBackground
+				customBackgroundView.backgroundColor = UIColor(named: "LabelInvert")!.add(overlay: appleColor(forIndex: index).withAlphaComponent(0.7))
 			} else {
 				customBackgroundView.backgroundColor = self.backgroundColor
 			}
 		}
 		customBackgroundView.layer.cornerCurve = .continuous
-		customBackgroundView.layer.cornerRadius = runningOn == "Mac" ? 5 : 10
+		customBackgroundView.layer.cornerRadius = runningOn == "Mac" ? 10 : 20
 		if runningOn == "Mac" {
 			if self.backgroundColor == .none || self.backgroundColor == .clear || self.backgroundColor == .secondarySystemGroupedBackground {
-				customBackgroundView.backgroundColor = .separator.withAlphaComponent(0.05)
+//				customBackgroundView.backgroundColor = .separator.withAlphaComponent(0.05)
+				appleColor(forIndex: index).withAlphaComponent(0.3)
 				customBackgroundView.layer.borderColor = UIColor.separator.cgColor
 				customBackgroundView.layer.borderWidth = 1
 			} else {
@@ -279,19 +312,47 @@ class DeviceListCell: UITableViewCell {
 		self.backgroundView = customBackgroundView
 		self.backgroundColor = .clear
 		
-		let selectedBackView = UIView()
 		selectedBackView.layer.cornerCurve = .continuous
-		selectedBackView.layer.cornerRadius = runningOn == "Mac" ? 5 : 10
+		selectedBackView.layer.cornerRadius = runningOn == "Mac" ? 10 : 20
 		selectedBackView.frame = self.frame
 		if runningOn == "Mac" {
 			selectedBackView.backgroundColor = .separator.withAlphaComponent(0.1)
 			selectedBackView.layer.borderColor = UIColor.separator.cgColor
 			selectedBackView.layer.borderWidth = 1
 		} else {
-			selectedBackView.backgroundColor = .systemGray3
+//			selectedBackView.backgroundColor = .systemGray3
+			selectedBackView.backgroundColor = UIColor(named: "LabelInvert")!.withAlphaComponent(0.3)
 		}
 		selectedBackView.clipsToBounds = true
 		self.selectedBackgroundView = selectedBackView
+	}
+	
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		super.traitCollectionDidChange(previousTraitCollection)
+		if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
+			if runningOn != "Mac" {
+				if self.backgroundColor == .none || self.backgroundColor == .clear || self.backgroundColor == .secondarySystemGroupedBackground {
+					//				customBackgroundView.backgroundColor = .secondarySystemGroupedBackground
+					if traitCollection.userInterfaceStyle == .dark {
+						customBackgroundView.backgroundColor = UIColor(named: "LabelInvert")!.add(overlay: appleColor(forIndex: index).withAlphaComponent(0.7))
+					} else {
+						customBackgroundView.backgroundColor = appleColor(forIndex: index)
+					}
+				} else {
+					customBackgroundView.backgroundColor = self.backgroundColor
+				}
+				selectedBackView.backgroundColor = .label.withAlphaComponent(0.3)
+			} else {
+				if self.backgroundColor == .none || self.backgroundColor == .clear || self.backgroundColor == .secondarySystemGroupedBackground {
+					//				customBackgroundView.backgroundColor = .separator.withAlphaComponent(0.05)
+					appleColor(forIndex: index).withAlphaComponent(0.3)
+					customBackgroundView.layer.borderColor = UIColor.separator.cgColor
+					customBackgroundView.layer.borderWidth = 1
+				} else {
+					customBackgroundView.backgroundColor = self.backgroundColor
+				}
+			}
+		}
 	}
 }
 
@@ -300,4 +361,8 @@ extension UIViewController {
 	var viewIsCompact: Bool {
 		return traitCollection.horizontalSizeClass == .compact
 	}
+}
+
+func appleColor(forIndex: Int) -> UIColor {
+	return UIColor(named: rainbowAppleColors[forIndex])!
 }
