@@ -32,16 +32,16 @@ class DetailsTableViewController: UITableViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.navigationController?.view.tintColor = .white
-		if let splitViewController = self.splitViewController {
+		navigationController?.view.tintColor = .white
+		if let splitViewController = splitViewController {
 			if splitViewController.viewIsCompact {
 				editButtonBlur.isHidden = true
 				deleteButtonBlur.isHidden = true
-				self.navigationController?.isNavigationBarHidden = false
+				navigationController?.isNavigationBarHidden = false
 			} else {
 				editButtonBlur.isHidden = false
 				deleteButtonBlur.isHidden = false
-				self.navigationController?.isNavigationBarHidden = true
+				navigationController?.isNavigationBarHidden = true
 			}
 		}
 	
@@ -59,12 +59,12 @@ class DetailsTableViewController: UITableViewController {
 		setData()
 		
 		if runningOn == "Mac" {
-			self.view.backgroundColor = .clear
+			view.backgroundColor = .clear
 		}
-		
-		DispatchQueue.main.async {
-			let scrollView = self.tableView as UIScrollView
-			self.headerImageTopConstraint.constant = scrollView.contentOffset.y
+//		
+		DispatchQueue.main.async { [self] in
+			let scrollView = tableView as UIScrollView
+			headerImageTopConstraint.constant = scrollView.contentOffset.y
 		}
 		
 		tableView.allowsFocus = false
@@ -74,7 +74,7 @@ class DetailsTableViewController: UITableViewController {
 	
 	override func viewDidAppear(_ animated: Bool) {
 		if runningOn != "Mac" {
-			self.navigationController?.view.tintColor = .white
+			navigationController?.view.tintColor = .white
 		}
 	}
 	
@@ -83,16 +83,16 @@ class DetailsTableViewController: UITableViewController {
 	}
 	
 	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-		if self.traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
-			if let splitViewController = self.splitViewController {
+		if traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
+			if let splitViewController = splitViewController {
 				if splitViewController.viewIsCompact {
 					editButtonBlur.isHidden = true
 					deleteButtonBlur.isHidden = true
-					self.navigationController?.isNavigationBarHidden = false
+					navigationController?.isNavigationBarHidden = false
 				} else {
 					editButtonBlur.isHidden = false
 					deleteButtonBlur.isHidden = false
-					self.navigationController?.isNavigationBarHidden = true
+					navigationController?.isNavigationBarHidden = true
 				}
 			}
 		}
@@ -106,6 +106,12 @@ class DetailsTableViewController: UITableViewController {
 		
 		navView.modalPresentationStyle = .pageSheet
 		present(navView, animated: true)
+	}
+	
+	override func viewDidDisappear(_ animated: Bool) {
+		headerImage.image = nil
+		self.removeFromParent()
+		NotificationCenter.default.removeObserver(self)
 	}
 	
 	func setData() {
@@ -131,7 +137,7 @@ class DetailsTableViewController: UITableViewController {
 	}
 	
 	@IBAction func back(_ sender: Any) {
-		self.navigationController?.popViewController(animated: true)
+		navigationController?.popViewController(animated: true)
 	}
 	
 	@IBAction func edit(_ sender: Any) {
@@ -161,16 +167,16 @@ class DetailsTableViewController: UITableViewController {
 		let action2 = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) in
 		}
 		
-		let action1 = UIAlertAction(title: "Delete", style: .destructive) { (action:UIAlertAction) in
-			deleteAllDataForSavedDevice(atIndex: self.indexToUse, shouldReload: true)
-			self.navigationController?.popViewController(animated: true)
+		let action1 = UIAlertAction(title: "Delete", style: .destructive) { [self] (action:UIAlertAction) in
+			deleteAllDataForSavedDevice(atIndex: indexToUse, shouldReload: true)
+			navigationController?.popViewController(animated: true)
 		}
 		
 		alertController.addAction(action1)
 		alertController.addAction(action2)
 		alertController.actions[0].setValue(UIColor(named: "AccentColor")!, forKey: "titleTextColor")
 		alertController.view.tintColor = UIColor(named: "AccentColor")!
-		self.present(alertController, animated: true, completion: nil)
+		present(alertController, animated: true, completion: nil)
 	}
 	
 	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -179,7 +185,7 @@ class DetailsTableViewController: UITableViewController {
 //			self.headerImageHeightConstraint.constant += abs(scrollView.contentOffset.y)
 //		}
 		print(scrollView.contentOffset.y)
-		self.headerImageTopConstraint.constant = scrollView.contentOffset.y
+		headerImageTopConstraint.constant = scrollView.contentOffset.y
 	}
 }
 
@@ -191,15 +197,15 @@ class ImageViewerViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.mainImageView.image = deviceImage(forIndex: indexToUse)
+		mainImageView.image = deviceImage(forIndex: indexToUse)
 		
-		self.navigationController?.navigationBar.prefersLargeTitles = false
+		navigationController?.navigationBar.prefersLargeTitles = false
 		let label = UILabel()
 		label.textColor = .label
 		label.text = "Device Image"
-		self.title = ""
+		title = ""
 		label.font = UIFont.systemFont(ofSize: (runningOn == "Mac") ? 17 : 22, weight: .semibold)
-		self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: label)
+		navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: label)
 	}
 	
 	@IBAction func shareImage(_ sender: Any) {
@@ -207,11 +213,11 @@ class ImageViewerViewController: UIViewController {
 		ac.title = "AppleTrack Device Image"
 		ac.popoverPresentationController?.sourceView = (sender as! UIView)
 		ac.popoverPresentationController?.sourceRect = (sender as AnyObject).bounds
-		self.present(ac, animated: true)
+		present(ac, animated: true)
 	}
 	
 	@IBAction func dismiss(_ sender: Any) {
-		self.dismiss(animated: true)
+		dismiss(animated: true)
 	}
 	
 }

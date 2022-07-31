@@ -89,14 +89,6 @@
                                                     <variation key="userInterfaceIdiom=mac" constant="70"/>
                                                 </constraint>
                                             </constraints>
-                                            <imageReference key="image" image="Fallback Image" renderingMode="hierarchical-single">
-                                                <hierarchicalColors>
-                                                    <color systemColor="tintColor"/>
-                                                    <color systemColor="secondaryLabelColor"/>
-                                                    <color systemColor="tertiaryLabelColor"/>
-                                                </hierarchicalColors>
-                                            </imageReference>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="light"/>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bba-5Y-Jyb">
                                             <rect key="frame" x="104.99999999999999" y="24.333333333333332" width="196.66666666666663" height="41.333333333333343"/>
@@ -232,7 +224,7 @@
                             </barButtonItem>
                             <barButtonItem title="Refresh Data" id="ALd-hZ-5VJ">
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" id="MuJ-pL-ndW">
-                                    <rect key="frame" x="63" y="3.6666666666666679" width="36.666666666666657" height="36.666666666666657"/>
+                                    <rect key="frame" x="292.66666666666669" y="3.6666666666666679" width="36.666666666666686" height="36.666666666666657"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="MuJ-pL-ndW" secondAttribute="height" multiplier="1:1" id="TO3-ge-cJD"/>
@@ -310,13 +302,6 @@
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7gj-co-ado">
                                     <rect key="frame" x="0.0" y="-91" width="390" height="341"/>
-                                    <imageReference key="image" image="Fallback Image" renderingMode="hierarchical-single">
-                                        <hierarchicalColors>
-                                            <color systemColor="tintColor"/>
-                                            <color systemColor="secondaryLabelColor"/>
-                                            <color systemColor="tertiaryLabelColor"/>
-                                        </hierarchicalColors>
-                                    </imageReference>
                                 </imageView>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Title Fade" translatesAutoresizingMaskIntoConstraints="NO" id="U0k-u8-h9I">
                                     <rect key="frame" x="0.0" y="100" width="390" height="150"/>
@@ -3540,7 +3525,7 @@
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mmw-A5-leY">
                                 <rect key="frame" x="0.0" y="635.66666666666663" width="360" height="64.333333333333371"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="yX6-MU-uO1">
-                                    <rect key="frame" x="0.0" y="0.0" width="360" height="64.333333333333371"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="360" height="64"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" role="primary" translatesAutoresizingMaskIntoConstraints="NO" id="DHj-z4-AAx">
