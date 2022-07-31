@@ -167,6 +167,7 @@ class HomeTableViewController: UITableViewController {
 //			self.present(vc, animated: true)
 //			//			tableView.deselectRow(at: indexPath, animated: true)
 //		} else {
+		NotificationCenter.default.post(name: Notification.Name("RemoveFromView"), object: nil)
 		if let splitViewController = self.splitViewController {
 			if splitViewController.viewIsCompact {
 				self.show(vc, sender: nil)

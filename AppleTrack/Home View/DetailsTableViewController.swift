@@ -70,6 +70,7 @@ class DetailsTableViewController: UITableViewController {
 		tableView.allowsFocus = false
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(UpdateSavedDevices(_:)), name: NSNotification.Name(rawValue: "UpdateSavedDevices"), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(RemoveFromView(_:)), name: NSNotification.Name(rawValue: "RemoveFromView"), object: nil)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -80,6 +81,12 @@ class DetailsTableViewController: UITableViewController {
 	
 	@objc func UpdateSavedDevices(_ notification: Notification) {
 		setData()
+	}
+	
+	@objc func RemoveFromView(_ notification: Notification) {
+		headerImage.image = nil
+		self.removeFromParent()
+		NotificationCenter.default.removeObserver(self)
 	}
 	
 	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -108,11 +115,11 @@ class DetailsTableViewController: UITableViewController {
 		present(navView, animated: true)
 	}
 	
-	override func viewDidDisappear(_ animated: Bool) {
-		headerImage.image = nil
-		self.removeFromParent()
-		NotificationCenter.default.removeObserver(self)
-	}
+//	override func viewDidDisappear(_ animated: Bool) {
+//		headerImage.image = nil
+//		self.removeFromParent()
+//		NotificationCenter.default.removeObserver(self)
+//	}
 	
 	func setData() {
 		let dateFormatter = DateFormatter()
