@@ -83,15 +83,20 @@ class ProductLinesTableViewController: UITableViewController {
 			present(view, animated: false)
 		} else {
 			let lineToUse = mainProductLines[indexPath.section].replacingOccurrences(of: "MORE", with: "").replacingOccurrences(of: "CUSTOM", with: "")
-			self.sourceView.productLine = lineToUse
-			self.sourceView.productLineButton.setTitle(lineToUse, for: .normal)
-			dismiss(animated: true)
+			setProductLine(withValue: lineToUse)
 		}
 	}
 	
 	func saveCustom(withValue: String) {
+		setProductLine(withValue: withValue)
+	}
+	
+	func setProductLine(withValue: String) {
 		self.sourceView.productLine = withValue
 		self.sourceView.productLineButton.setTitle(withValue, for: .normal)
+		if self.sourceView.modelNameField.text == "" {
+			self.sourceView.modelNameField.text = withValue + " "
+		}
 		DispatchQueue.main.async {
 			self.dismiss(animated: true)
 		}
@@ -106,9 +111,7 @@ class ProductLinesTableViewController: UITableViewController {
 		for product in forItems {
 			toReturn.append(
 				UIAction(title: product, image: nil, handler: { (_) in
-					self.sourceView.productLine = product
-					self.sourceView.productLineButton.setTitle(product, for: .normal)
-					self.dismiss(animated: true)
+					self.setProductLine(withValue: product)
 				})
 			)
 		}

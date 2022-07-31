@@ -10,7 +10,7 @@ import CoreData
 import UIKit
 
 var savedDevicesData: [NSManagedObject] = []
-//var SavedDevicesList: [String] = []
+var SavedProductLines: [String] = []
 
 func getSavedDevicesData() {
 	guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -24,11 +24,11 @@ func getSavedDevicesData() {
 	
 	do {
 		savedDevicesData = try managedContext.fetch(fetchRequest)
-//		SavedDevicesList = []
-//		for Entity in savedDevicesData as [NSManagedObject] {
-//			let valueForKey = Entity.value(forKey: "savedLetter") as? String ?? ""
-//			SavedDevicesList.append(valueForKey)
-//		}
+		SavedProductLines = []
+		for Entity in savedDevicesData as [NSManagedObject] {
+			let valueForKey = Entity.value(forKey: "productLine") as? String ?? ""
+			SavedProductLines.append(valueForKey)
+		}
 	} catch let error as NSError {
 		print("Could not fetch data. \(error), \(error.userInfo)")
 	}

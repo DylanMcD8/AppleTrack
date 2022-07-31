@@ -32,19 +32,28 @@ class DetailsTableViewController: UITableViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		if runningOn == "Mac" {
-			self.navigationController?.isNavigationBarHidden = true
-		} else {
-			self.navigationController?.view.tintColor = .white
+		self.navigationController?.view.tintColor = .white
+		if let splitViewController = self.splitViewController {
+			if splitViewController.viewIsCompact {
+				editButtonBlur.isHidden = true
+				deleteButtonBlur.isHidden = true
+				self.navigationController?.isNavigationBarHidden = false
+			} else {
+				editButtonBlur.isHidden = false
+				deleteButtonBlur.isHidden = false
+				self.navigationController?.isNavigationBarHidden = true
+			}
 		}
-		
 	
-		
-		backButtonBlur.layer.cornerRadius = 35 / 2
+		var heightValue: CGFloat = 35
+		if runningOn == "Mac" {
+			heightValue = 27
+		}
+		backButtonBlur.layer.cornerRadius = heightValue / 2
 		backButtonBlur.clipsToBounds = true
-		editButtonBlur.layer.cornerRadius = 35 / 2
+		editButtonBlur.layer.cornerRadius = heightValue / 2
 		editButtonBlur.clipsToBounds = true
-		deleteButtonBlur.layer.cornerRadius = 35 / 2
+		deleteButtonBlur.layer.cornerRadius = heightValue / 2
 		deleteButtonBlur.clipsToBounds = true
 		
 		setData()
@@ -73,6 +82,22 @@ class DetailsTableViewController: UITableViewController {
 		setData()
 	}
 	
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		if self.traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
+			if let splitViewController = self.splitViewController {
+				if splitViewController.viewIsCompact {
+					editButtonBlur.isHidden = true
+					deleteButtonBlur.isHidden = true
+					self.navigationController?.isNavigationBarHidden = false
+				} else {
+					editButtonBlur.isHidden = false
+					deleteButtonBlur.isHidden = false
+					self.navigationController?.isNavigationBarHidden = true
+				}
+			}
+		}
+	}
+	
 	@IBAction func showImage(_ sender: Any) {
 		let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Image Viewer") as! ImageViewerViewController
 		vc.indexToUse = indexToUse
@@ -97,6 +122,12 @@ class DetailsTableViewController: UITableViewController {
 		storageCapacityLabel.text = deviceCapacity(forIndex: indexToUse)
 		serialNumberLabel.text = deviceSerialNumber(forIndex: indexToUse)
 		notesLabel.text = deviceNotes(forIndex: indexToUse)
+		if notesLabel.text == "" || notesLabel.text == "No notes" {
+			notesLabel.text = "No notes"
+			notesLabel.textColor = .secondaryLabel
+		} else {
+			notesLabel.textColor = .label
+		}
 	}
 	
 	@IBAction func back(_ sender: Any) {
@@ -169,6 +200,14 @@ class ImageViewerViewController: UIViewController {
 		self.title = ""
 		label.font = UIFont.systemFont(ofSize: (runningOn == "Mac") ? 17 : 22, weight: .semibold)
 		self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: label)
+	}
+	
+	@IBAction func shareImage(_ sender: Any) {
+		let ac = UIActivityViewController(activityItems: [deviceImage(forIndex: indexToUse)], applicationActivities: nil)
+		ac.title = "AppleTrack Device Image"
+		ac.popoverPresentationController?.sourceView = (sender as! UIView)
+		ac.popoverPresentationController?.sourceRect = (sender as AnyObject).bounds
+		self.present(ac, animated: true)
 	}
 	
 	@IBAction func dismiss(_ sender: Any) {

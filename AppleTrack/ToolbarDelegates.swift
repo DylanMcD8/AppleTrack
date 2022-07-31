@@ -168,7 +168,7 @@ extension HomeToolbarDelegate: NSToolbarDelegate {
 			item.image = UIImage(systemName: "info.circle")
 			item.toolTip = "Opens the app's information page."
 			item.title = "App Info"
-			item.action = NSSelectorFromString("openSettings:")
+			item.action = NSSelectorFromString("showAbout:")
 			toolbarItem = item
 			
 		case .sortOptions:

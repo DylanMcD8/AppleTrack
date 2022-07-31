@@ -55,15 +55,12 @@ class BootViewController: UIViewController {
 			self.iconView.alpha = 1
 			self.backgroundColorView.alpha = 1
 		}
-		DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) { [self] in
+		
+		DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
 			UIView.animate(withDuration: 0.5) {
 				self.iconView.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
 				self.iconView.alpha = 0
 			}
-//			let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Main Screen Nav")
-//			vc.modalPresentationStyle = .fullScreen
-//			vc.modalTransitionStyle = .crossDissolve
-//			present(vc, animated: true)
 			self.dismiss(animated: true)
 		}
 	}
@@ -73,10 +70,6 @@ class BootViewController: UIViewController {
 			self.iconView.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
 			self.iconView.alpha = 0
 		}
-//		let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Main Screen Nav")
-//		vc.modalPresentationStyle = .fullScreen
-//		vc.modalTransitionStyle = .crossDissolve
-//		present(vc, animated: true)
 		self.dismiss(animated: true)
 		audioPlayer?.stop()
 	}

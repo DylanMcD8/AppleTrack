@@ -59,6 +59,13 @@ class HomeTableViewController: UITableViewController {
 
 	}
 	
+	@IBAction func showAbout(_ sender: Any) {
+		let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "About Nav")
+		vc.modalPresentationStyle = .formSheet
+		vc.preferredContentSize = CGSize(width: 350, height: 610)
+		present(vc, animated: true)
+	}
+	
 	@IBAction func newDevice(_ sender: Any) {
 		if runningOn == "Mac" {
 			let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Add Device Mac") as! AddDeviceMacHostingView
@@ -77,58 +84,67 @@ class HomeTableViewController: UITableViewController {
 	func updateCellColors() {
 		for index in 0...tableView.numberOfSections - 1 {
 			let cell = tableView.cellForRow(at: [index,0]) as! DeviceListCell
-			cell.customBackgroundView.backgroundColor = appleColor(forIndex: index, useDark: (runningOn != "Mac"))
 			cell.index = index
+			UIView.animate(withDuration : 0.3) {
+				cell.customBackgroundView.backgroundColor = self.appleColor(forIndex: index, useDark: (runningOn != "Mac"))
+			}
 		}
 	}
 	
 	
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return savedDevicesData.count
+		return SavedProductLines.uniqued().count 
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 1
+		let uniqueProductLines = SavedProductLines.uniqued()
+		return SavedProductLines.filter{$0 == uniqueProductLines[section]}.count
 	}
 	
-	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let index = indexPath.section // - 1
-//		var cell: UITableViewCell!
-		//		if indexPath.section == 0 {
-		//			cell = self.tableView.dequeueReusableCell(withIdentifier: "stats cell", for: indexPath)
-		//		} else {
-//		if isNoData {
-//			cell = self.tableView.dequeueReusableCell(withIdentifier: "no data cell", for: indexPath)
-//		} else {
-		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "yyyy"
-		let releaseYear = dateFormatter.string(from: deviceReleaseDate(forIndex: index))
-		
-		let cell = self.tableView.dequeueReusableCell(withIdentifier: "main cell", for: indexPath) as! DeviceListCell
-		cell.titleLabel.text = deviceModelName(forIndex: index)
-		cell.titleLabel.textColor = .white
-		cell.subtitleLabel.text = deviceColor(forIndex: index) + " • " + releaseYear
-		cell.subtitleLabel.textColor = .white.withAlphaComponent(0.6)
-		cell.deviceImage.image = deviceImage(forIndex: index)
-		
-		cell.index = index
-		
-		if runningOn == "Mac" {
-			cell.customBackgroundView.backgroundColor = appleColor(forIndex: index, useDark: false).withAlphaComponent(0.3)
-		} else {
-			cell.customBackgroundView.backgroundColor = appleColor(forIndex: index, useDark: true)
-		}
-		
-		cell.deviceImage.layer.shouldRasterize = true
-		if let window = self.view.window {
-			cell.deviceImage.layer.rasterizationScale = window.screen.scale
-		} else {
-			cell.deviceImage.layer.rasterizationScale = 3
-		}
-		
-//		}
-		//		}
+	var lastProductLine = ""
+	var indexForCells: Int = 0
 	
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//		let index = indexPath.section // - 1
+		let index = indexForCells
+		
+		var cell: UITableViewCell!
+		
+		if deviceProductLine(forIndex: index) != lastProductLine {
+			cell = self.tableView.dequeueReusableCell(withIdentifier: "title cell", for: indexPath) as! SectionTitleCell
+			let cellToUse = cell as! SectionTitleCell
+			cellToUse.titleLabel.text = deviceProductLine(forIndex: index)
+			cellToUse.iconImageView.image = productLineImage(forLine: deviceProductLine(forIndex: index))
+		} else {
+			cell = self.tableView.dequeueReusableCell(withIdentifier: "main cell", for: indexPath) as! DeviceListCell
+			let cellToUse = cell as! DeviceListCell
+			let dateFormatter = DateFormatter()
+			dateFormatter.dateFormat = "yyyy"
+			let releaseYear = dateFormatter.string(from: deviceReleaseDate(forIndex: index))
+			cellToUse.titleLabel.text = deviceModelName(forIndex: index)
+			cellToUse.titleLabel.textColor = .white
+			cellToUse.subtitleLabel.text = deviceColor(forIndex: index) + " • " + releaseYear
+			cellToUse.subtitleLabel.textColor = .white.withAlphaComponent(0.6)
+			cellToUse.deviceImage.image = deviceImage(forIndex: index)
+			
+			cellToUse.index = index
+			
+			if runningOn == "Mac" {
+				cellToUse.customBackgroundView.backgroundColor = appleColor(forIndex: index, useDark: false).withAlphaComponent(0.3)
+			} else {
+				cellToUse.customBackgroundView.backgroundColor = appleColor(forIndex: index, useDark: true)
+			}
+			
+			cellToUse.deviceImage.layer.shouldRasterize = true
+			if let window = self.view.window {
+				cellToUse.deviceImage.layer.rasterizationScale = window.screen.scale
+			} else {
+				cellToUse.deviceImage.layer.rasterizationScale = 3
+			}
+			indexForCells = indexForCells + 1
+		}
+		
+		lastProductLine = deviceProductLine(forIndex: index)
 		return cell
 	}
 	
@@ -175,6 +191,15 @@ class HomeTableViewController: UITableViewController {
 			let vc = (UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Device Details") as! DetailsTableViewController)
 			vc.indexToUse = self.previewIndex.section
 			self.show(vc, sender: nil)
+			if let splitViewController = self.splitViewController {
+				if splitViewController.viewIsCompact {
+					self.show(vc, sender: nil)
+				} else {
+					self.showDetailViewController(vc, sender: nil)
+				}
+			} else {
+				self.show(vc, sender: nil)
+			}
 		}
 	}
 	
@@ -269,6 +294,19 @@ class HomeTableViewController: UITableViewController {
 			present(nav, animated: true)
 		}
 	}	
+	
+	func productLineImage(forLine: String) -> UIImage {
+		var symbolName: String = ""
+		switch forLine {
+		case "Apple Watch":
+			symbolName = "watch"
+		case "iPhone":
+			symbolName = "iphone"
+		default:
+			break
+		}
+		return UIImage(systemName: symbolName) ?? UIImage(systemName: "applelogo")!
+	}
 }
 
 class DeviceListCell: UITableViewCell {
@@ -287,13 +325,14 @@ class DeviceListCell: UITableViewCell {
 		
 		if runningOn == "Mac" {
 			deviceImage.layer.cornerCurve = .continuous
-			deviceImage.layer.cornerRadius = 10
+			deviceImage.layer.cornerRadius = 9.5
 			deviceImage.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
 			deviceImage.layer.borderColor = UIColor.separator.cgColor
 			deviceImage.layer.borderWidth = 1
 		} else {
 			deviceImage.layer.cornerCurve = .continuous
-			deviceImage.layer.cornerRadius = 20
+			deviceImage.layer.cornerRadius = 19.5
+			
 			deviceImage.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
 		}
 		
@@ -363,6 +402,20 @@ class DeviceListCell: UITableViewCell {
 	}
 }
 
+
+class SectionTitleCell: UITableViewCell {
+	
+	@IBOutlet weak var iconImageView: TintedImage!
+	@IBOutlet weak var titleLabel: UILabel!
+	
+}
+
+extension Sequence where Element: Hashable {
+	func uniqued() -> [Element] {
+		var set = Set<Element>()
+		return filter { set.insert($0).inserted }
+	}
+}
 
 extension UIViewController {
 	var viewIsCompact: Bool {
