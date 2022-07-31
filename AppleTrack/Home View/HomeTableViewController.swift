@@ -82,11 +82,16 @@ class HomeTableViewController: UITableViewController {
 	}
 	
 	func updateCellColors() {
-		for index in 0...tableView.numberOfSections - 1 {
-			let cell = tableView.cellForRow(at: [index,0]) as! DeviceListCell
-			cell.index = index
-			UIView.animate(withDuration : 0.3) {
-				cell.customBackgroundView.backgroundColor = self.appleColor(forIndex: index, useDark: (runningOn != "Mac"))
+		for section in 0...tableView.numberOfSections - 1 {
+			for row in 0...tableView.numberOfRows(inSection: section) - 1 {
+				if row != 0 {
+					let cell = tableView.cellForRow(at: [section,row]) as! DeviceListCell
+					let uniqueIndex = SavedSerialNumbers.firstIndex(of: cell.serialNumber) ?? 0
+					cell.index = uniqueIndex
+					UIView.animate(withDuration : 0.3) {
+						cell.customBackgroundView.backgroundColor = self.appleColor(forIndex: uniqueIndex, useDark: (runningOn != "Mac"))
+					}
+				}
 			}
 		}
 	}
@@ -133,6 +138,7 @@ class HomeTableViewController: UITableViewController {
 			cellToUse.deviceImage.image = UIImage(data: (dataToUse[index].value(forKeyPath: "image") as? Data ?? UIImage(named: "Fallback Image")!.pngData()!)) ?? UIImage(named: "Fallback Image")!
 			
 			cellToUse.index = uniqueIndex
+			cellToUse.serialNumber = dataToUse[index].value(forKeyPath: "serialNumber") as? String ?? ""
 			
 			if runningOn == "Mac" {
 				cellToUse.customBackgroundView.backgroundColor = appleColor(forIndex: uniqueIndex, useDark: false).withAlphaComponent(0.3)
@@ -165,7 +171,7 @@ class HomeTableViewController: UITableViewController {
 			if splitViewController.viewIsCompact {
 				self.show(vc, sender: nil)
 			} else {
-				self.showDetailViewController(vc, sender: nil)
+				splitViewController.setViewController(vc, for: .secondary)
 			}
 		} else {
 			self.show(vc, sender: nil)
@@ -177,63 +183,75 @@ class HomeTableViewController: UITableViewController {
 	
 	var previewIndex: IndexPath = [0,0]
 	override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		return UIContextMenuConfiguration(identifier: nil, previewProvider: {
-			let index = indexPath.section // - 1
-			let vc = (UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Device Details") as! DetailsTableViewController)
-			vc.indexToUse = index
-			self.previewIndex = indexPath
-			return vc
-		}, actionProvider: { suggestedActions in
-			return self.makeContextMenu(indexPath: indexPath)
-		})
+		if indexPath.row != 0 {
+			return UIContextMenuConfiguration(identifier: nil, previewProvider: {
+				let index = indexPath.section // - 1
+				let vc = (UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Device Details") as! DetailsTableViewController)
+				vc.indexToUse = index
+				self.previewIndex = indexPath
+				return vc
+			}, actionProvider: { suggestedActions in
+				return self.makeContextMenu(indexPath: indexPath)
+			})
+		} else {
+			return nil
+		}
 	}
 	
 	
 	override func tableView(_ tableView: UITableView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
-		animator.addCompletion {
-			let vc = (UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Device Details") as! DetailsTableViewController)
-			vc.indexToUse = self.previewIndex.section
-			self.show(vc, sender: nil)
-			if let splitViewController = self.splitViewController {
-				if splitViewController.viewIsCompact {
+		
+		let vc = (UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Device Details") as! DetailsTableViewController)
+		vc.indexToUse = self.previewIndex.section
+		if let splitViewController = self.splitViewController {
+			if splitViewController.viewIsCompact {
+				animator.addCompletion {
 					self.show(vc, sender: nil)
-				} else {
-					self.showDetailViewController(vc, sender: nil)
 				}
 			} else {
+				self.showDetailViewController(vc, sender: nil)
+			}
+		} else {
+			animator.addCompletion {
 				self.show(vc, sender: nil)
 			}
 		}
 	}
-	
+
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt selectedIndexPath: IndexPath) ->   UISwipeActionsConfiguration? {
-		
-		let delete = UIContextualAction(style: .destructive, title: "Delete", handler: { (action, view, completionHandler) in
-			self.deleteAction(indexPath: selectedIndexPath)
-		})
-		delete.image = UIImage(systemName: "trash")
-		delete.backgroundColor = .systemRed
-		
-		let configuration = UISwipeActionsConfiguration(actions: [delete])
-		return configuration
+		if selectedIndexPath.row != 0 {
+			let delete = UIContextualAction(style: .destructive, title: "Delete", handler: { (action, view, completionHandler) in
+				self.deleteAction(indexPath: selectedIndexPath)
+			})
+			delete.image = UIImage(systemName: "trash")
+			delete.backgroundColor = .systemRed
+			
+			let configuration = UISwipeActionsConfiguration(actions: [delete])
+			return configuration
+		} else {
+			return nil
+		}
 	}
 	
 	override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt selectedIndexPath: IndexPath) ->   UISwipeActionsConfiguration? {
-		
-		let edit = UIContextualAction(style: .normal, title: "Edit", handler: { (action, view, completionHandler) in
-			self.editAction(indexPath: selectedIndexPath)
-		})
-		edit.image = UIImage(systemName: "pencil")
-		edit.backgroundColor = UIColor(named: "AccentColor")!
-		
-//		let share = UIContextualAction(style: .normal, title: "Share", handler: { (action, view, completionHandler) in
-//			self.shareAction(indexPath: selectedIndexPath)
-//		})
-//		share.image = UIImage(systemName: "square.and.arrow.up")
-//		share.backgroundColor = UIColor(named: "AccentColor")!.withAlphaComponent(0.6)
-		
-		let configuration = UISwipeActionsConfiguration(actions: [edit])
-		return configuration
+		if selectedIndexPath.row != 0 {
+			let edit = UIContextualAction(style: .normal, title: "Edit", handler: { (action, view, completionHandler) in
+				self.editAction(indexPath: selectedIndexPath)
+			})
+			edit.image = UIImage(systemName: "pencil")
+			edit.backgroundColor = UIColor(named: "AccentColor")!
+			
+			//		let share = UIContextualAction(style: .normal, title: "Share", handler: { (action, view, completionHandler) in
+			//			self.shareAction(indexPath: selectedIndexPath)
+			//		})
+			//		share.image = UIImage(systemName: "square.and.arrow.up")
+			//		share.backgroundColor = UIColor(named: "AccentColor")!.withAlphaComponent(0.6)
+			
+			let configuration = UISwipeActionsConfiguration(actions: [edit])
+			return configuration
+		} else {
+			return nil
+		}
 	}
 	
 	private func makeContextMenu(indexPath: IndexPath) -> UIMenu {
@@ -362,9 +380,18 @@ class DeviceListCell: UITableViewCell {
 	@IBOutlet weak var deviceImage: UIImageView!
 	
 	var index: Int = 0
+	var serialNumber: String = ""
 	
 	var customBackgroundView = UIView()
 	var selectedBackView = UIView()
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		
+		contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0))
+		backgroundView?.frame = (backgroundView?.frame.inset(by: UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)))!
+		selectedBackgroundView?.frame = (selectedBackgroundView?.frame.inset(by: UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)))!
+	}
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
