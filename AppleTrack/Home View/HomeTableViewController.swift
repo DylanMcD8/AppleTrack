@@ -66,12 +66,20 @@ class HomeTableViewController: UITableViewController {
 			
 			vc.modalPresentationStyle = .formSheet
 			vc.preferredContentSize = CGSize(width: 350, height: 600)
-			present(vc, animated: false)
+			present(vc, animated: true)
 		}
 	}
 	
 	@IBAction func refreshData(_ sender: Any) {
 		getSavedDevicesData()
+	}
+	
+	func updateCellColors() {
+		for index in 0...tableView.numberOfSections - 1 {
+			let cell = tableView.cellForRow(at: [index,0]) as! DeviceListCell
+			cell.customBackgroundView.backgroundColor = appleColor(forIndex: index, useDark: (runningOn != "Mac"))
+			cell.index = index
+		}
 	}
 	
 	
@@ -106,9 +114,9 @@ class HomeTableViewController: UITableViewController {
 		cell.index = index
 		
 		if runningOn == "Mac" {
-			cell.customBackgroundView.backgroundColor = appleColor(forIndex: index).withAlphaComponent(0.3)
+			cell.customBackgroundView.backgroundColor = appleColor(forIndex: index, useDark: false).withAlphaComponent(0.3)
 		} else {
-			cell.customBackgroundView.backgroundColor = UIColor(named: "LabelInvert")!.add(overlay: appleColor(forIndex: indexPath.section).withAlphaComponent(0.7))
+			cell.customBackgroundView.backgroundColor = appleColor(forIndex: index, useDark: true)
 		}
 		
 		cell.deviceImage.layer.shouldRasterize = true
@@ -231,6 +239,7 @@ class HomeTableViewController: UITableViewController {
 		let action1 = UIAlertAction(title: "Delete", style: .destructive) { (action:UIAlertAction) in
 			deleteAllDataForSavedDevice(atIndex: indexPath.section, shouldReload: false)
 			self.tableView.deleteSections([indexPath.section], with: .middle)
+			self.updateCellColors()
 		}
 		
 		alertController.addAction(action1)
@@ -248,7 +257,7 @@ class HomeTableViewController: UITableViewController {
 			
 			vc.modalPresentationStyle = .formSheet
 			vc.preferredContentSize = CGSize(width: 350, height: 600)
-			present(vc, animated: false)
+			present(vc, animated: true)
 		} else {
 			let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Add Device") as! NewDeviceTableViewController
 			vc.shouldEdit = true
@@ -257,7 +266,7 @@ class HomeTableViewController: UITableViewController {
 			let nav = UINavigationController(rootViewController: vc)
 			nav.modalPresentationStyle = .formSheet
 			
-			present(nav, animated: false)
+			present(nav, animated: true)
 		}
 	}	
 }
@@ -291,7 +300,7 @@ class DeviceListCell: UITableViewCell {
 		if runningOn != "Mac" {
 			if self.backgroundColor == .none || self.backgroundColor == .clear || self.backgroundColor == .secondarySystemGroupedBackground {
 //				customBackgroundView.backgroundColor = .secondarySystemGroupedBackground
-				customBackgroundView.backgroundColor = UIColor(named: "LabelInvert")!.add(overlay: appleColor(forIndex: index).withAlphaComponent(0.7))
+				customBackgroundView.backgroundColor = appleColor(forIndex: index, useDark: true)
 			} else {
 				customBackgroundView.backgroundColor = self.backgroundColor
 			}
@@ -301,7 +310,7 @@ class DeviceListCell: UITableViewCell {
 		if runningOn == "Mac" {
 			if self.backgroundColor == .none || self.backgroundColor == .clear || self.backgroundColor == .secondarySystemGroupedBackground {
 //				customBackgroundView.backgroundColor = .separator.withAlphaComponent(0.05)
-				appleColor(forIndex: index).withAlphaComponent(0.3)
+				appleColor(forIndex: index, useDark: false).withAlphaComponent(0.3)
 				customBackgroundView.layer.borderColor = UIColor.separator.cgColor
 				customBackgroundView.layer.borderWidth = 1
 			} else {
@@ -321,7 +330,7 @@ class DeviceListCell: UITableViewCell {
 			selectedBackView.layer.borderWidth = 1
 		} else {
 //			selectedBackView.backgroundColor = .systemGray3
-			selectedBackView.backgroundColor = UIColor(named: "LabelInvert")!.withAlphaComponent(0.3)
+			selectedBackView.backgroundColor = .label.withAlphaComponent(0.3)
 		}
 		selectedBackView.clipsToBounds = true
 		self.selectedBackgroundView = selectedBackView
@@ -333,11 +342,9 @@ class DeviceListCell: UITableViewCell {
 			if runningOn != "Mac" {
 				if self.backgroundColor == .none || self.backgroundColor == .clear || self.backgroundColor == .secondarySystemGroupedBackground {
 					//				customBackgroundView.backgroundColor = .secondarySystemGroupedBackground
-					if traitCollection.userInterfaceStyle == .dark {
-						customBackgroundView.backgroundColor = UIColor(named: "LabelInvert")!.add(overlay: appleColor(forIndex: index).withAlphaComponent(0.7))
-					} else {
-						customBackgroundView.backgroundColor = appleColor(forIndex: index)
-					}
+				
+					customBackgroundView.backgroundColor = appleColor(forIndex: index, useDark: true)
+					
 				} else {
 					customBackgroundView.backgroundColor = self.backgroundColor
 				}
@@ -345,7 +352,7 @@ class DeviceListCell: UITableViewCell {
 			} else {
 				if self.backgroundColor == .none || self.backgroundColor == .clear || self.backgroundColor == .secondarySystemGroupedBackground {
 					//				customBackgroundView.backgroundColor = .separator.withAlphaComponent(0.05)
-					appleColor(forIndex: index).withAlphaComponent(0.3)
+					appleColor(forIndex: index, useDark: false).withAlphaComponent(0.3)
 					customBackgroundView.layer.borderColor = UIColor.separator.cgColor
 					customBackgroundView.layer.borderWidth = 1
 				} else {
@@ -363,6 +370,42 @@ extension UIViewController {
 	}
 }
 
-func appleColor(forIndex: Int) -> UIColor {
-	return UIColor(named: rainbowAppleColors[forIndex])!
+extension UIView {
+	func appleColor(forIndex: Int, useDark: Bool) -> UIColor {
+		var numberToUse: Int = 0
+		if forIndex == 6 {
+			numberToUse = 0
+		} else {
+			numberToUse = (forIndex % 6)
+		}
+		if useDark {
+			if traitCollection.userInterfaceStyle == .dark {
+				return UIColor(named: "LabelInvert")!.add(overlay: UIColor(named: rainbowAppleColors[numberToUse])!.withAlphaComponent(0.7))
+			} else {
+				return UIColor(named: rainbowAppleColors[numberToUse])!
+			}
+		} else {
+			return UIColor(named: rainbowAppleColors[numberToUse])!
+		}
+	}
+}
+
+extension UITableViewController {
+	func appleColor(forIndex: Int, useDark: Bool) -> UIColor {
+		var numberToUse: Int = 0
+		if forIndex == 6 {
+			numberToUse = 0
+		} else {
+			numberToUse = (forIndex % 6)
+		}
+		if useDark {
+			if traitCollection.userInterfaceStyle == .dark {
+				return UIColor(named: "LabelInvert")!.add(overlay: UIColor(named: rainbowAppleColors[numberToUse])!.withAlphaComponent(0.7))
+			} else {
+				return UIColor(named: rainbowAppleColors[numberToUse])!
+			}
+		} else {
+			return UIColor(named: rainbowAppleColors[numberToUse])!
+		}
+	}
 }

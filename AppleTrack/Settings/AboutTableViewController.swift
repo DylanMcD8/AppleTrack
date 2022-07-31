@@ -30,8 +30,13 @@ class AboutTableViewController: UITableViewController, SFSafariViewControllerDel
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationController?.navigationBar.sizeToFit()
+		self.navigationController?.navigationBar.prefersLargeTitles = false
+		let label = UILabel()
+		label.textColor = .label
+		label.text = "About"
+		self.title = ""
+		label.font = UIFont.systemFont(ofSize: (runningOn == "Mac") ? 17 : 25, weight: .bold)
+		self.navigationItem.leftBarButtonItems = [UIBarButtonItem.init(customView: label)]
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

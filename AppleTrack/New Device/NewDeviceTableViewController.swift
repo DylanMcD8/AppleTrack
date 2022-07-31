@@ -71,6 +71,14 @@ class NewDeviceTableViewController: UITableViewController, UITextFieldDelegate {
 		
 		if runningOn == "Mac" {
 			self.view.backgroundColor = .clear
+		} else {
+			self.navigationController?.navigationBar.prefersLargeTitles = false
+			let label = UILabel()
+			label.textColor = .label
+			label.text = shouldEdit ? "Edit Device" : "New Device"
+			self.title = ""
+			label.font = UIFont.systemFont(ofSize: (runningOn == "Mac") ? 17 : 22, weight: .semibold)
+			self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: label)
 		}
     }
 
@@ -229,12 +237,15 @@ class AddDeviceMacHostingView: UIViewController {
 	var shouldEdit: Bool = false
 	var indexToEdit: Int = 0
 	
+	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var containerView: UIView!
 	
 	var mainView: NewDeviceTableViewController!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		titleLabel.text = shouldEdit ? "Edit Device" : "New Device"
+		
 		mainView = (UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Add Device") as! NewDeviceTableViewController)
 		mainView.shouldEdit = shouldEdit
 		mainView.indexToEdit = indexToEdit

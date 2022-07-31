@@ -63,6 +63,12 @@ class DetailsTableViewController: UITableViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(UpdateSavedDevices(_:)), name: NSNotification.Name(rawValue: "UpdateSavedDevices"), object: nil)
 	}
 	
+	override func viewDidAppear(_ animated: Bool) {
+		if runningOn != "Mac" {
+			self.navigationController?.view.tintColor = .white
+		}
+	}
+	
 	@objc func UpdateSavedDevices(_ notification: Notification) {
 		setData()
 	}
@@ -74,7 +80,7 @@ class DetailsTableViewController: UITableViewController {
 		let navView = UINavigationController(rootViewController: vc)
 		
 		navView.modalPresentationStyle = .pageSheet
-		present(navView, animated: false)
+		present(navView, animated: true)
 	}
 	
 	func setData() {
@@ -105,7 +111,7 @@ class DetailsTableViewController: UITableViewController {
 			
 			vc.modalPresentationStyle = .formSheet
 			vc.preferredContentSize = CGSize(width: 350, height: 600)
-			present(vc, animated: false)
+			present(vc, animated: true)
 		} else {
 			let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Add Device") as! NewDeviceTableViewController
 			vc.shouldEdit = true
@@ -114,7 +120,7 @@ class DetailsTableViewController: UITableViewController {
 			let nav = UINavigationController(rootViewController: vc)
 			nav.modalPresentationStyle = .formSheet
 			
-			present(nav, animated: false)
+			present(nav, animated: true)
 		}
 	}
 	
