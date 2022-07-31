@@ -11,6 +11,7 @@ import UIKit
 
 var savedDevicesData: [NSManagedObject] = []
 var SavedProductLines: [String] = []
+var SavedSerialNumbers: [String] = []
 
 func getSavedDevicesData() {
 	guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -26,13 +27,41 @@ func getSavedDevicesData() {
 		savedDevicesData = try managedContext.fetch(fetchRequest)
 		SavedProductLines = []
 		for Entity in savedDevicesData as [NSManagedObject] {
-			let valueForKey = Entity.value(forKey: "productLine") as? String ?? ""
-			SavedProductLines.append(valueForKey)
+			let productLineValue = Entity.value(forKey: "productLine") as? String ?? ""
+			let serialNumberValue = Entity.value(forKey: "serialNumber") as? String ?? ""
+			SavedProductLines.append(productLineValue)
+			SavedSerialNumbers.append(serialNumberValue)
 		}
 	} catch let error as NSError {
 		print("Could not fetch data. \(error), \(error.userInfo)")
 	}
 	NotificationCenter.default.post(name: Notification.Name("UpdateSavedDevices"), object: nil)
+}
+
+func getSavedDevicesData(forSpecificProductLine: String) -> [NSManagedObject] {
+	var toReturn: [NSManagedObject] = []
+	guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+		return []
+	}
+	let managedContext = appDelegate.persistentContainer.viewContext
+	managedContext.automaticallyMergesChangesFromParent = true
+	
+	let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SavedDevices")
+	fetchRequest.sortDescriptors = [NSSortDescriptor(key: "productLine", ascending: true), NSSortDescriptor(key: "releaseDate", ascending: true)]
+	
+	do {
+		let allData = try managedContext.fetch(fetchRequest)
+		for Entity in allData as [NSManagedObject] {
+			if (Entity.value(forKeyPath: "productLine") as? String ?? "") == forSpecificProductLine { 
+				toReturn.append(Entity)
+			}
+		}
+	} catch let error as NSError {
+		print("Could not fetch data. \(error), \(error.userInfo)")
+	}
+//	NotificationCenter.default.post(name: Notification.Name("UpdateSavedDevices"), object: nil)
+	
+	return toReturn
 }
 
 // Create a new entry

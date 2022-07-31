@@ -133,7 +133,7 @@ extension HomeToolbarDelegate: NSToolbarDelegate {
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
         let identifiers: [NSToolbarItemGroup.Identifier] = [
 			.add,
-            .sortOptions,
+//            .sortOptions,
 			.refresh,
             .openSettings
 		].reversed()

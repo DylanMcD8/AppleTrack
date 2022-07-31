@@ -98,41 +98,46 @@ class HomeTableViewController: UITableViewController {
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		let uniqueProductLines = SavedProductLines.uniqued()
-		return SavedProductLines.filter{$0 == uniqueProductLines[section]}.count
+		return SavedProductLines.filter{$0 == uniqueProductLines[section]}.count + 1
 	}
 	
-	var lastProductLine = ""
-	var indexForCells: Int = 0
+//	var lastProductLine = ""
+//	var indexForCells: Int = 0
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//		let index = indexPath.section // - 1
-		let index = indexForCells
+		let index = indexPath.row - 1
+//		let index = indexForCells
 		
 		var cell: UITableViewCell!
 		
-		if deviceProductLine(forIndex: index) != lastProductLine {
+		if indexPath.row == 0 {
 			cell = self.tableView.dequeueReusableCell(withIdentifier: "title cell", for: indexPath) as! SectionTitleCell
 			let cellToUse = cell as! SectionTitleCell
-			cellToUse.titleLabel.text = deviceProductLine(forIndex: index)
-			cellToUse.iconImageView.image = productLineImage(forLine: deviceProductLine(forIndex: index))
+			cellToUse.titleLabel.text = SavedProductLines.uniqued()[indexPath.section]
+			cellToUse.iconImageView.image = productLineImage(forLine: SavedProductLines.uniqued()[indexPath.section])
 		} else {
 			cell = self.tableView.dequeueReusableCell(withIdentifier: "main cell", for: indexPath) as! DeviceListCell
 			let cellToUse = cell as! DeviceListCell
+			
+			let dataToUse = getSavedDevicesData(forSpecificProductLine: SavedProductLines.uniqued()[indexPath.section])
+			
+			let uniqueIndex = SavedSerialNumbers.firstIndex(of: dataToUse[index].value(forKeyPath: "serialNumber") as? String ?? "") ?? 0
+			
 			let dateFormatter = DateFormatter()
 			dateFormatter.dateFormat = "yyyy"
-			let releaseYear = dateFormatter.string(from: deviceReleaseDate(forIndex: index))
-			cellToUse.titleLabel.text = deviceModelName(forIndex: index)
+			let releaseYear = dateFormatter.string(from: (dataToUse[index].value(forKeyPath: "releaseDate") as? Date ?? Date()))
+			cellToUse.titleLabel.text = dataToUse[index].value(forKeyPath: "modelName") as? String ?? ""
 			cellToUse.titleLabel.textColor = .white
-			cellToUse.subtitleLabel.text = deviceColor(forIndex: index) + " • " + releaseYear
+			cellToUse.subtitleLabel.text = (dataToUse[index].value(forKeyPath: "color") as? String ?? "") + " • " + releaseYear
 			cellToUse.subtitleLabel.textColor = .white.withAlphaComponent(0.6)
-			cellToUse.deviceImage.image = deviceImage(forIndex: index)
+			cellToUse.deviceImage.image = UIImage(data: (dataToUse[index].value(forKeyPath: "image") as? Data ?? UIImage(named: "Fallback Image")!.pngData()!)) ?? UIImage(named: "Fallback Image")!
 			
-			cellToUse.index = index
+			cellToUse.index = uniqueIndex
 			
 			if runningOn == "Mac" {
-				cellToUse.customBackgroundView.backgroundColor = appleColor(forIndex: index, useDark: false).withAlphaComponent(0.3)
+				cellToUse.customBackgroundView.backgroundColor = appleColor(forIndex: uniqueIndex, useDark: false).withAlphaComponent(0.3)
 			} else {
-				cellToUse.customBackgroundView.backgroundColor = appleColor(forIndex: index, useDark: true)
+				cellToUse.customBackgroundView.backgroundColor = appleColor(forIndex: uniqueIndex, useDark: true)
 			}
 			
 			cellToUse.deviceImage.layer.shouldRasterize = true
@@ -141,16 +146,14 @@ class HomeTableViewController: UITableViewController {
 			} else {
 				cellToUse.deviceImage.layer.rasterizationScale = 3
 			}
-			indexForCells = indexForCells + 1
 		}
 		
-		lastProductLine = deviceProductLine(forIndex: index)
 		return cell
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let vc = (UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Device Details") as! DetailsTableViewController)
-		vc.indexToUse = indexPath.section
+		vc.indexToUse = (tableView.cellForRow(at: indexPath) as! DeviceListCell).index
 		
 //		if runningOn == "Mac" {
 //			vc.modalTransitionStyle = .crossDissolve
@@ -298,12 +301,55 @@ class HomeTableViewController: UITableViewController {
 	func productLineImage(forLine: String) -> UIImage {
 		var symbolName: String = ""
 		switch forLine {
-		case "Apple Watch":
-			symbolName = "watch"
 		case "iPhone":
 			symbolName = "iphone"
+		case "Apple Watch":
+			symbolName = "applewatch"
+		case "Apple TV":
+			symbolName = "appletv.fill"
+		case "AirPods":
+			symbolName = "airpods.gen3"
+		case "HomePod":
+			symbolName = "homepod.and.homepodmini.fill"
+		case "Beats":
+			symbolName = "beats.earphones"
+		case "Accessories":
+			symbolName = "applepencil"
+		case "Newton":
+			symbolName = "rectangle.portrait.inset.filled"
+		case "AirPort":
+			symbolName = "airport.extreme.tower"
+			
+			// iPads
+		case "iPad":
+			symbolName = "ipad.homebutton"
+		case "iPad mini", "iPad Pro", "iPad Air":
+			symbolName = "ipad"
+			
+			// iPods
+		case "iPod classic", "iPod mini", "iPod nano":
+			symbolName = "ipod"
+		case "iPod shuffle":
+			symbolName = "ipodshuffle.gen2"
+		case "iPod touch":
+			symbolName = "ipodtouch"
+			
+			// Macs
+		case "MacBook", "MacBook Air", "MacBook Pro", "iBook", "PowerBook":
+			symbolName = "laptopcomputer"
+		case "iMac", "iMac Pro", "eMac", "Macintosh", "Performa":
+			symbolName = "desktopcomputer"
+		case "Mac Pro", "Power Mac":
+			symbolName = "macpro.gen1"
+		case "Mac mini":
+			symbolName = "macmini"
+		case "Mac Studio":
+			symbolName = "macstudio"
+		case "Xserve", "Workgroup":
+			symbolName = "xserve"
+			
 		default:
-			break
+			symbolName = "applelogo"
 		}
 		return UIImage(systemName: symbolName) ?? UIImage(systemName: "applelogo")!
 	}

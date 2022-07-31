@@ -15,6 +15,7 @@ let mainProductLines = [
 	"MacMORE",
 	"Apple TV",
 	"AirPods",
+	"Beats",
 	"HomePod",
 	"Accessories",
 	"Newton",

@@ -101,7 +101,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bba-5Y-Jyb">
                                             <rect key="frame" x="105.33333333333333" y="24.666666666666668" width="196.33333333333337" height="41.333333333333329"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="iPhone 6" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eBw-ts-uuD">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iPhone 6" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eBw-ts-uuD">
                                                     <rect key="frame" x="0.0" y="0.0" width="196.33333333333334" height="20.333333333333332"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -110,7 +110,7 @@
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                     </variation>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Silver • 2014" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oqv-Mu-fhW">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Silver • 2014" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oqv-Mu-fhW">
                                                     <rect key="frame" x="0.0" y="24.333333333333329" width="196.33333333333334" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -182,55 +182,26 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="AppleTrack" largeTitleDisplayMode="always" id="dZ3-GS-o9T">
                         <barButtonItem key="backBarButtonItem" title=" " id="c0x-6C-AJi"/>
-                        <leftBarButtonItems>
-                            <barButtonItem title="Open Info" id="qud-26-bqe">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" id="SJD-YP-akT">
-                                    <rect key="frame" x="16" y="2.6666666666666679" width="39" height="39"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" secondItem="SJD-YP-akT" secondAttribute="height" multiplier="1:1" id="1gR-VY-SF9"/>
-                                        <constraint firstAttribute="height" constant="35" id="m1L-Jk-nju">
-                                            <variation key="userInterfaceIdiom=mac" constant="27"/>
-                                        </constraint>
-                                    </constraints>
-                                    <color key="tintColor" systemColor="tintColor"/>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="tinted" image="info" catalog="system" cornerStyle="capsule">
-                                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="21" scale="medium" weight="bold"/>
-                                    </buttonConfiguration>
-                                    <connections>
-                                        <segue destination="ndZ-bF-d0E" kind="presentation" id="oAT-en-z2v"/>
-                                    </connections>
-                                </button>
-                            </barButtonItem>
-                            <barButtonItem title="Refresh Data" id="ALd-hZ-5VJ">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" id="MuJ-pL-ndW">
-                                    <rect key="frame" x="63" y="3.6666666666666679" width="36.666666666666657" height="36.666666666666657"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" secondItem="MuJ-pL-ndW" secondAttribute="height" multiplier="1:1" id="TO3-ge-cJD"/>
-                                        <constraint firstAttribute="height" constant="35" id="agq-t4-1zX">
-                                            <variation key="userInterfaceIdiom=mac" constant="27"/>
-                                        </constraint>
-                                    </constraints>
-                                    <color key="tintColor" systemColor="tintColor"/>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="tinted" cornerStyle="capsule">
-                                        <imageReference key="image" image="arrow.clockwise.icloud.fill" catalog="system" renderingMode="hierarchical-single">
-                                            <hierarchicalColors>
-                                                <color systemColor="tintColor"/>
-                                                <color systemColor="secondaryLabelColor"/>
-                                                <color systemColor="tertiaryLabelColor"/>
-                                            </hierarchicalColors>
-                                        </imageReference>
-                                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="19" scale="medium" weight="bold"/>
-                                    </buttonConfiguration>
-                                    <connections>
-                                        <action selector="refreshData:" destination="t2Y-kn-PdH" eventType="touchUpInside" id="jti-mZ-LUJ"/>
-                                    </connections>
-                                </button>
-                            </barButtonItem>
-                        </leftBarButtonItems>
+                        <barButtonItem key="leftBarButtonItem" title="Open Info" id="qud-26-bqe">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" id="SJD-YP-akT">
+                                <rect key="frame" x="16" y="2.6666666666666679" width="39" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="SJD-YP-akT" secondAttribute="height" multiplier="1:1" id="1gR-VY-SF9"/>
+                                    <constraint firstAttribute="height" constant="35" id="m1L-Jk-nju">
+                                        <variation key="userInterfaceIdiom=mac" constant="27"/>
+                                    </constraint>
+                                </constraints>
+                                <color key="tintColor" systemColor="tintColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" image="info" catalog="system" cornerStyle="capsule">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="21" scale="medium" weight="bold"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <segue destination="ndZ-bF-d0E" kind="presentation" id="oAT-en-z2v"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem title="Add New Device" id="T4j-H7-RiU">
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" id="fAg-jF-JE4">
@@ -259,20 +230,20 @@
                                     </connections>
                                 </button>
                             </barButtonItem>
-                            <barButtonItem title="Sorting Options" id="QNf-LX-TBg">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" id="mwl-lt-A5w">
-                                    <rect key="frame" x="292.66666666666669" y="3.6666666666666679" width="36.666666666666686" height="36.666666666666657"/>
+                            <barButtonItem title="Refresh Data" id="ALd-hZ-5VJ">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" id="MuJ-pL-ndW">
+                                    <rect key="frame" x="63" y="3.6666666666666679" width="36.666666666666657" height="36.666666666666657"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" secondItem="mwl-lt-A5w" secondAttribute="height" multiplier="1:1" id="55C-WL-peZ"/>
-                                        <constraint firstAttribute="height" constant="35" id="fEi-Nc-0th">
+                                        <constraint firstAttribute="width" secondItem="MuJ-pL-ndW" secondAttribute="height" multiplier="1:1" id="TO3-ge-cJD"/>
+                                        <constraint firstAttribute="height" constant="35" id="agq-t4-1zX">
                                             <variation key="userInterfaceIdiom=mac" constant="27"/>
                                         </constraint>
                                     </constraints>
                                     <color key="tintColor" systemColor="tintColor"/>
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="tinted" cornerStyle="capsule">
-                                        <imageReference key="image" image="arrow.up.arrow.down" catalog="system" renderingMode="hierarchical-single">
+                                        <imageReference key="image" image="arrow.clockwise.icloud.fill" catalog="system" renderingMode="hierarchical-single">
                                             <hierarchicalColors>
                                                 <color systemColor="tintColor"/>
                                                 <color systemColor="secondaryLabelColor"/>
@@ -281,6 +252,9 @@
                                         </imageReference>
                                         <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="19" scale="medium" weight="bold"/>
                                     </buttonConfiguration>
+                                    <connections>
+                                        <action selector="refreshData:" destination="t2Y-kn-PdH" eventType="touchUpInside" id="jti-mZ-LUJ"/>
+                                    </connections>
                                 </button>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -4034,7 +4008,6 @@
         <image name="Sample Image" width="1920" height="1080"/>
         <image name="Title Fade" width="500" height="500"/>
         <image name="arrow.clockwise.icloud.fill" catalog="system" width="128" height="90"/>
-        <image name="arrow.up.arrow.down" catalog="system" width="128" height="97"/>
         <image name="bag" catalog="system" width="128" height="128"/>
         <image name="box.truck.badge.clock" catalog="system" width="128" height="97"/>
         <image name="calendar" catalog="system" width="128" height="107"/>
