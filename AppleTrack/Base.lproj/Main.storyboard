@@ -63,7 +63,9 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="qrD-N6-3ZO" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Ne9-2P-MPm" secondAttribute="top" id="0Oz-vf-yNP"/>
-                                        <constraint firstItem="qrD-N6-3ZO" firstAttribute="leading" secondItem="Ne9-2P-MPm" secondAttribute="leading" constant="20" symbolic="YES" id="BD2-jQ-h9g"/>
+                                        <constraint firstItem="qrD-N6-3ZO" firstAttribute="leading" secondItem="Ne9-2P-MPm" secondAttribute="leading" constant="20" symbolic="YES" id="BD2-jQ-h9g">
+                                            <variation key="userInterfaceIdiom=mac" constant="5"/>
+                                        </constraint>
                                         <constraint firstAttribute="trailing" secondItem="XSS-g4-2ms" secondAttribute="trailing" id="EdU-FY-U2H"/>
                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="XSS-g4-2ms" secondAttribute="bottom" id="JeS-da-Tvj"/>
                                         <constraint firstItem="qrD-N6-3ZO" firstAttribute="centerY" secondItem="Ne9-2P-MPm" secondAttribute="centerY" id="TEK-O0-YA4"/>
@@ -100,7 +102,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bba-5Y-Jyb">
                                             <rect key="frame" x="104.99999999999999" y="24.333333333333332" width="196.66666666666663" height="41.333333333333343"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iPhone 6" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eBw-ts-uuD">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iPhone 6" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eBw-ts-uuD">
                                                     <rect key="frame" x="0.0" y="0.0" width="196.66666666666666" height="20.333333333333332"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -3570,7 +3572,7 @@
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mmw-A5-leY">
                                 <rect key="frame" x="0.0" y="635.66666666666663" width="360" height="64.333333333333371"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="yX6-MU-uO1">
-                                    <rect key="frame" x="0.0" y="0.0" width="360" height="64"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="360" height="64.333333333333371"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" role="primary" translatesAutoresizingMaskIntoConstraints="NO" id="DHj-z4-AAx">

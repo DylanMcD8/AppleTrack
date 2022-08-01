@@ -62,7 +62,7 @@ class AboutTableViewController: UITableViewController, SFSafariViewControllerDel
         }
         tableView.deselectRow(at: indexPath, animated: true)
 		
-		if indexPath.section == 6 {
+		if indexPath.section == 7 {
 			let alertController = UIAlertController(title: "Are you sure?", message: "This will add sample data to the app. This is not intended for general users. You should delete existing entries before doing this.", preferredStyle: .alert)
 			
 			let action2 = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) in
