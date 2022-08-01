@@ -37,12 +37,19 @@
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
+                                            <variation key="userInterfaceIdiom=mac">
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                            </variation>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qrD-N6-3ZO" customClass="TintedImage" customModule="AppleTrack" customModuleProvider="target">
                                             <rect key="frame" x="20" y="-3" width="25" height="46.666666666666664"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="25" id="NGt-RS-zWU"/>
-                                                <constraint firstAttribute="height" constant="40" id="ZBe-rC-nbW"/>
+                                                <constraint firstAttribute="width" constant="25" id="NGt-RS-zWU">
+                                                    <variation key="userInterfaceIdiom=mac" constant="19"/>
+                                                </constraint>
+                                                <constraint firstAttribute="height" constant="40" id="ZBe-rC-nbW">
+                                                    <variation key="userInterfaceIdiom=mac" constant="30"/>
+                                                </constraint>
                                             </constraints>
                                             <imageReference key="image" image="iphone" catalog="system" renderingMode="hierarchical-single">
                                                 <hierarchicalColors>
@@ -2386,6 +2393,43 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="erO-Os-6gs">
+                                <cells/>
+                            </tableViewSection>
+                            <tableViewSection id="Zj0-m9-nWI">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="zE5-mn-wsh" imageView="Tvg-md-xBs" style="IBUITableViewCellStyleDefault" id="OJb-iS-hna" customClass="StandardCell" customModule="AppleTrack" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="790.66667175292969" width="350" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OJb-iS-hna" id="JGg-e2-rhf">
+                                            <rect key="frame" x="0.0" y="0.0" width="319.66666666666669" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Apply Sample Data" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zE5-mn-wsh">
+                                                    <rect key="frame" x="56.166666666666686" y="0.0" width="255.5" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" systemColor="systemRedColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Tvg-md-xBs" customClass="TintedImage" customModule="AppleTrack" customModuleProvider="target">
+                                                    <rect key="frame" x="22.833333333333336" y="12.000000000000002" width="18.333333333333332" height="19.666666666666668"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <color key="tintColor" systemColor="systemRedColor"/>
+                                                    <imageReference key="image" image="cylinder.split.1x2.fill" catalog="system" renderingMode="hierarchical-single">
+                                                        <hierarchicalColors>
+                                                            <color systemColor="tintColor"/>
+                                                            <color systemColor="secondaryLabelColor"/>
+                                                            <color systemColor="tertiaryLabelColor"/>
+                                                        </hierarchicalColors>
+                                                    </imageReference>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="cMK-EV-8v4" id="CUp-qx-tqo"/>
@@ -3526,7 +3570,7 @@
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mmw-A5-leY">
                                 <rect key="frame" x="0.0" y="635.66666666666663" width="360" height="64.333333333333371"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="yX6-MU-uO1">
-                                    <rect key="frame" x="0.0" y="0.0" width="360" height="64.333333333333371"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="360" height="64"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" role="primary" translatesAutoresizingMaskIntoConstraints="NO" id="DHj-z4-AAx">
@@ -4018,6 +4062,7 @@
         <image name="calendar.day.timeline.left" catalog="system" width="128" height="91"/>
         <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="cylinder.split.1x2.fill" catalog="system" width="119" height="128"/>
         <image name="externaldrive" catalog="system" width="128" height="88"/>
         <image name="gear" catalog="system" width="128" height="122"/>
         <image name="hand.raised" catalog="system" width="128" height="128"/>
