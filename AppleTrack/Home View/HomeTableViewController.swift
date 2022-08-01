@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class HomeTableViewController: UITableViewController {
 
@@ -102,12 +103,15 @@ class HomeTableViewController: UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		print("Loading number of rows for section \(section)")
 		let uniqueProductLines = SavedProductLines.uniqued()
 		return SavedProductLines.filter{$0 == uniqueProductLines[section]}.count + 1
 	}
 	
-//	var lastProductLine = ""
+	var lastProductLine = ""
 //	var indexForCells: Int = 0
+	
+	var dataForSection: [NSManagedObject] = []
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let index = indexPath.row - 1
@@ -124,7 +128,11 @@ class HomeTableViewController: UITableViewController {
 			cell = self.tableView.dequeueReusableCell(withIdentifier: "main cell", for: indexPath) as! DeviceListCell
 			let cellToUse = cell as! DeviceListCell
 			
-			let dataToUse = getSavedDevicesData(forSpecificProductLine: SavedProductLines.uniqued()[indexPath.section])
+			if lastProductLine != SavedProductLines.uniqued()[indexPath.section] {
+				dataForSection = getSavedDevicesData(forSpecificProductLine: SavedProductLines.uniqued()[indexPath.section])
+			}
+			
+			let dataToUse = dataForSection
 			
 			let uniqueIndex = SavedSerialNumbers.firstIndex(of: dataToUse[index].value(forKeyPath: "serialNumber") as? String ?? "") ?? 0
 			
@@ -152,6 +160,7 @@ class HomeTableViewController: UITableViewController {
 			} else {
 				cellToUse.deviceImage.layer.rasterizationScale = 3
 			}
+			lastProductLine = SavedProductLines.uniqued()[indexPath.section]
 		}
 		
 		return cell

@@ -111,14 +111,12 @@ class NewDeviceTableViewController: UITableViewController, UITextFieldDelegate {
 	}
 	
 	@IBAction func save(_ sender: Any) {
-//		print("*** SAVING!")
 		let modelName = modelNameField.text ?? ""
 		let color = colorField.text ?? ""
 		let capacity = capacityField.text ?? ""
 		let serialNumber = serialNumberField.text ?? ""
 		let notes = notesTextView.text ?? ""
 		let imageData = imageToSave.pngData() ?? (UIImage(named: "Fallback Image")!.pngData()!)
-		//		let image = 
 		
 		if shouldEdit {
 			saveDeviceProductLine(with: productLine, forIndex: indexToEdit)
